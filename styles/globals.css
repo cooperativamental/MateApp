@@ -1,9 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  color: white
 }
 
 a {
@@ -15,12 +20,33 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+@layer components {
+  .btn {
+    @apply font-medium text-xl px-6 justify-center items-center min-w-max h-14 text-white 
+    w-40 bg-blue-color cursor-pointer select-none
+    active:translate-y-1 
+    active:[box-shadow:0_0_10px_0_#6221E8,0_0_5px_0_#BA30E5]
+    active:border-[0px]
+    transition-all duration-300 
+    [box-shadow:0_1px_0_0_#BA30E5,0_1px_0_0_#6221E8]
+    rounded-full  border-[1px] 
+    border-violet-color
+    hover:bg-gradient-to-b hover:from-violet-color hover:to-blue-color
+    hover:text-white
   }
-  body {
-    color: white;
-    background: black;
+  .btn2 {
+    @apply font-medium text-xl px-6 justify-center items-center min-w-max h-12 text-white 
+    w-40 cursor-pointer select-none bg-green-color
+    active:translate-y-1 
+    active:[box-shadow:0_0_5px_0_#3BB89F,0_0_5px_0_#1A1735] 
+    active:border-[0px] 
+    transition-all duration-300 
+    [box-shadow:0_1px_0_0_#1A1735,0_1px_0_0_#1A1735]
+    rounded-full  border-[1px] 
+    hover:bg-gradient-to-b hover:from-yellow-color hover:to-green-color
+    hover:text-white
+  }
+  .btn-back{
+    @apply sticky grid place-content-center self-start h-[2rem] w-[2rem] max-h-[2rem] max-w-[2rem] top-4 rounded-full border-2 border-white
   }
 }
