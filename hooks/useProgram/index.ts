@@ -32,7 +32,7 @@ export const useProgram = ({ connection, wallet }: ProgramProps) => {
   }, [connection, wallet]);
 
   const updateProgram = () => {
-    const provider = new anchor.Provider(connection, wallet, {
+    const provider = new anchor.AnchorProvider(connection, wallet, {
       preflightCommitment: "recent",
       commitment: "processed",
     });
