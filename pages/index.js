@@ -9,6 +9,7 @@ import { useProgram } from "../hooks/useProgram/index.ts"
 import Projects from "../components/Projects";
 import HeadBar from "../components/Elements/HeadTab"
 import ComponentButton from "../components/Elements/ComponentButton";
+import { Processor } from "postcss";
 
 const PageHomeProjects = () => {
   const router = useRouter()
@@ -40,8 +41,15 @@ const PageHomeProjects = () => {
   const [listProjects, setListProjects] = useState([]);
 
   useEffect(() => {
-
-  }, [])
+    if(wallet){
+      console.log(wallet.publicKey.toBase58())
+      fetch(`/api/solana/getAllProjectsByPubkey?pubkey=${wallet.publicKey.toBase58()}`)
+      .then(async (res)=>{
+        const projects = await res.json()
+        console.log(projects)
+      })
+    }
+  }, [wallet])
 
   return (
     <div className="flex flex-col w-8/12 items-center gap-8">

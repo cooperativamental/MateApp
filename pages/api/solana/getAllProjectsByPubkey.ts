@@ -23,7 +23,7 @@ const getAllProjectsByPubkey = async (req, res) => {
         const allprojects = await program.account.project.all()
 
         const projects = req.query.pubkey ? allprojects.filter((project: any) =>
-            project.account.payments.some(payment =>
+            project.account.members.some(payment =>
                 (payment.member as web3.PublicKey).toString() == req.query.pubkey)
         ) : allprojects
         res.status(200).send({

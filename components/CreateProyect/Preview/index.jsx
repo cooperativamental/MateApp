@@ -1,15 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { useAuth } from "../../../context/auth";
-import { sendEmail } from "../../../functions/sendMail";
+import { sendEmail } from "../../../functions/sendMail.js"
 
 import ComponentButton from "../../Elements/ComponentButton";
 
-import {
-    getDatabase, serverTimestamp,
-    ref, set, push, get
-} from "firebase/database";
 import { useHost } from "../../../context/host";
 
 const PreviewProject = ({ project, setProject, setConfirmation }) => {
@@ -22,127 +17,6 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
     const [retrySendProposal, setRetrySendProporsal] = useState({
         status: false,
     })
-
-    const sendProposal = (keyProject) => {
-        return new Promise((resolve, reject) => {
-            const proposalPartner = Object.entries(project.partners).map(([key, valuePartner]) => {
-                return new Promise((resolve, reject) => {
-                    if (key !== user?.uid) {
-                        set(ref(db, `users/${key}/projects/${keyProject}`), {
-                            amount: valuePartner?.amount,
-                            status: "ANNOUNCEMENT",
-                            createdAt: serverTimestamp(),
-                        })
-                            .then((snapshot) => {
-                                const pushNoti = push(ref(db, `notifications/${key}`))
-                                let cliName = ""
-                                Object.values(project.client).forEach(client => cliName = client.clientName)
-                                set(pushNoti,
-                                    {
-                                        type: "NEW_PROJECT",
-                                        projectID: keyProject,
-                                        projectHolder: user?.displayName,
-                                        client: cliName,
-                                        nameProject: project.nameProject,
-                                        viewed: false,
-                                        open: false,
-                                        showCard: false,
-                                        statusProject: "ANNOUNCEMENT",
-                                        createdAt: serverTimestamp()
-                                    }
-                                )
-                                    .then(res => {
-                                        sendEmail(
-                                            {
-                                                from: {
-                                                    name: user.name,
-                                                    email: user.email
-                                                },
-                                                to: {
-                                                    name: valuePartner.name,
-                                                    email: valuePartner.email
-                                                },
-                                                subject: "New project invitation",
-                                                redirect: `${host}/projects/${keyProject}`,
-                                                text: [
-                                                    `Member: ${user.name},`,
-                                                    `Invites you to join ${project.nameProject} for ${cliName}.`
-                                                ],
-                                            }
-                                        )
-                                    })
-                                    .catch(err => {
-                                        console.log(err)
-                                    })
-
-                                resolve("Proposal Sent")
-                            })
-                            .catch((error) => {
-                                // The write failed...
-                                console.log(error);
-                                reject(error)
-                            });
-                    } else {
-                        resolve("Project owner")
-                    }
-
-                })
-            })
-            Promise.all(proposalPartner)
-                .then(res => {
-                    resolve("All proposals were successfully submitted")
-                })
-                .catch(err => {
-                    reject(`Sorry, there was an error, please try again, ${err}`)
-                })
-        })
-    }
-
-    const confirmProject = async () => {
-        const projectRef = ref(db, "projects/");
-        const pushProject = push(projectRef);
-        set(pushProject, {
-            ...project,
-            createdAt: serverTimestamp(),
-        })
-            .then((snapshot) => {
-                set(ref(db, "users/" + user.uid + "/projectsOwner/" + pushProject.key), {
-                    nameProject: project.nameProject,
-                })
-                sendProposal(pushProject.key)
-                    .then(res => {
-                        setProject({
-                            ...project,
-                            nameProject: "",
-                            client: {},
-                            start: "",
-                            end: "",
-                            totalNeto: 0,
-                            thirdParties: { amount: 0 },
-                            partners: []
-                        })
-
-                        setRetrySendProporsal({
-                            status: false,
-                        })
-                        router.push({
-                            pathname: "/projects/[id]",
-                            query: { holder: true, id: pushProject.key }
-                        })
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        setRetrySendProporsal({
-                            status: true,
-                            key: pushProject.key
-                        })
-                    })
-            })
-            .catch((error) => {
-                // The write failed...
-                console.error(error);
-            });
-    }
 
 
     const renderInfo = (info) => {

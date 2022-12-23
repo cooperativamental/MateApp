@@ -4,21 +4,13 @@ import { useRouter } from "next/router"
 
 import ComponentButton from "../../Elements/ComponentButton"
 import InputSelect from "../../Elements/InputSelect"
-import { MultiSelect } from "../../MultiSelect"
-
-import { getDatabase, ref, get, orderByChild, query, equalTo, onValue } from "firebase/database";
-import { where, getDocs, collection, query as queryFirestore } from "firebase/firestore";
-
-import { useAuth } from "../../../context/auth";
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useProgram } from "../../../hooks/useProgram/index.ts"
 
 const AssembleTeam = ({ project, setProject, confirmInfoProject, available, errors, confirmation }) => {
-    const db = getDatabase()
     const router = useRouter()
-    const { user, firestore } = useAuth()
 
     const [assembleTeam, setAssembleTeam] = useState()
     const [partners, setPartners] = useState()
@@ -28,60 +20,6 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
     const wallet = useAnchorWallet();
     const { program } = useProgram({ connection, wallet });
 
-    useEffect(() => {
-        if (program?.account?.group && user) {
-            (async () => {
-                const resTeamsWeb3 = await program?.account?.group.all()
-                const findTeam = resTeamsWeb3?.find(team => team.account.name === router.query.team) 
-                getDocs(queryFirestore(collection(firestore, 'users'), where("team", "array-contains", router.query.team)))
-                    .then((resUsers) => {
-                        let listUsers = {}
-                        resUsers.forEach(user => {
-                            listUsers = {
-                                ...listUsers,
-                                [user.id]: {
-                                    ...user.data(),
-                                    name: user.data().name
-                                }
-                            }
-                        })
-                        setPartners(listUsers)
-                        setSelectPartners({
-                            ...selectPartners,
-                            [user.uid]: listUsers[user.uid]
-                        })
-                    })
-                get(query(ref(db, `wallet/${user?.uid}`)))
-                    .then(res => {
-                        const convertWalletsInTeam = findTeam.account.members.map(member => member.toBase58())
-                        const filterWalletInTeam = Object.values(res.val()).filter((wallet) => {
-                            return convertWalletsInTeam.includes(wallet.publicKey)
-                        }
-                        )
-                        // const walletsInTeam = Object.fromEntries(filterWalletInTeam)
-                        setProject({
-                            ...project,
-                            partners: {
-                                ...project.partners,
-                                [user.uid]: {
-                                    ...project.partners[user.uid],
-                                    wallet: filterWalletInTeam[0]?.publicKey
-                                }
-                            },
-                            projectHolder: {
-                                ...project.projectHolder,
-                                [user.uid]: {
-                                    ...project.projectHolder[user.uid],
-                                    wallet: filterWalletInTeam[0]?.publicKey
-                                }
-                            }
-                        })
-                    })
-
-            })()
-        }
-    }, [db, user, firestore, program?.account?.group, router.query.team, project.fiatOrCrypto])
-
 
     const handleBudgetProject = (e, data) => {
         const value = Number(e.target.value)
@@ -89,10 +27,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             if (e.target.name === "wallet") {
                 setProject({
                     ...project,
-                    partners: {
-                        ...project.partners,
+                    members: {
+                        ...project.members,
                         [data.uid]: {
-                            ...project.partners[data.uid],
+                            ...project.members[data.uid],
                             [e.target.name]: e.target.value
                         }
                     },
@@ -107,10 +45,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             if (e.target.name === "percentage") {
                 setProject({
                     ...project,
-                    partners: {
-                        ...project.partners,
+                    members: {
+                        ...project.members,
                         [data.uid]: {
-                            ...project.partners[data.uid],
+                            ...project.members[data.uid],
                             name: data.partner.name,
                             status: user.uid !== data.uid ? "ANNOUNCEMENT" : "CONFIRMED",
                             percentage: value,
@@ -123,10 +61,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             if (e.target.name === "amountPartners") {
                 setProject({
                     ...project,
-                    partners: {
-                        ...project.partners,
+                    members: {
+                        ...project.members,
                         [data.uid]: {
-                            ...project.partners[data.uid],
+                            ...project.members[data.uid],
                             name: data.partner.name,
                             amount: value,
                             percentage: (value / ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100)))) * 100,
@@ -143,9 +81,9 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
         setAssembleTeam(false)
         setProject({
             ...project,
-            partners: {
+            members: {
                 [user.uid]: {
-                    ...project.partners[user.uid],
+                    ...project.members[user.uid],
                     amount: 0,
                     percentage: 0
                 }
@@ -169,32 +107,20 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
     const removeSelect = (idPartner) => {
         const { [idPartner]: _, ...restPartners } = selectPartners
         setSelectPartners(restPartners)
-        const { [idPartner]: __, ...resInfoPartners } = project.partners
+        const { [idPartner]: __, ...resInfoPartners } = project.members
         setProject({
             ...project,
-            partners: resInfoPartners
+            members: resInfoPartners
         })
     }
 
     const handleConfirm = () => {
-        confirmInfoProject("ASSEMBLE_TEAM", true)
+        confirmInfoProject("PROPOSAL", true)
     }
 
     return (
         <div className="flex flex-col text-center gap-8 items-center w-8/12" >
             <h1 className=" text-4xl font-medium">Assemble your team of partners</h1>
-            {
-                selectPartners &&
-                <MultiSelect
-                    label="Select your partners"
-                    options={partners}
-                    setSelectState={setSelectPartners}
-                    selectState={selectPartners}
-                    placeholder="Select your partners"
-                    blockOption={user.uid}
-                />
-            }
-
             <div className="flex flex-col sm:grid w-full sm:grid-cols-2 gap-4">
                 {
                     selectPartners && Object.entries(selectPartners).map(([key, select]) => {
@@ -264,7 +190,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                 buttonEvent={handleConfirm}
                 buttonText="Confirm Team"
                 buttonStyle={`h-14 ${(!!Object.values(errors).find(error => !!error)) ? "bg-[grey]" : "bg-[#5A31E1]"}`}
-                conditionDisabled={errors.partners}
+                conditionDisabled={errors.members}
             />
         </div>
 
