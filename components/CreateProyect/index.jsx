@@ -10,6 +10,7 @@ import { sendEmail } from "../../functions/sendMail"
 import ComponentButton from "../Elements/ComponentButton";
 import Proposal from "./Proposal";
 import PreviewProject from "./Preview";
+import Agreement from "./Agreement";
 
 
 const CreateProject = () => {
@@ -41,8 +42,9 @@ const CreateProject = () => {
     currency: "SOL",
     invoiceDate: false,
     fiatOrCrypto: "CRYPTO",
+    treasuryGroup: 0,
     team: router?.query?.team,
-    ratio: 0
+    reserve: 0
   })
 
 
@@ -61,18 +63,14 @@ const CreateProject = () => {
 
     setAvailable(((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)))
     setReserve((project?.ratio * (project?.totalNeto - project?.thirdParties?.amount)) / 100)
-    console.log(project?.members)
+    console.log(!!project.totalBruto, ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)) < 0)
+    console.log("resultado", ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)))
     setErrors({
       thirdParties: (project?.totalBruto - project?.thirdParties?.amount) < 0,
-      available: ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)) < 0,
-      // totalPartners: ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)) != 0,
-      // members: !Object.keys(project?.members).length || !!Object.entries(project?.members).find(([keyPartner, partner]) => !partner.amount || (keyPartner === user.uid && !partner.wallet))
+      available: !project.totalBruto || ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)) < 0,
     })
   }, [project.totalNeto, project.thirdParties, project.partners, project.ratio])
 
-
-  console.log(!(confirmation.INFO_PROJECT && confirmation.BUDGET && confirmation.PROPOSAL))
-  console.log(confirmation.INFO_PROJECT, confirmation.BUDGET, confirmation.PROPOSAL)
 
   return (
     <div
@@ -80,9 +78,8 @@ const CreateProject = () => {
       ref={refContainer}
     >
 
-      <div className="flex w-6/12 justify-between font-bold text-xl">
+      <div className="flex w-6/12 justify-between font-bold text-base">
         <p>Project Starter Wallet:</p>
-
       </div>
       <hr className=" h-[3px] flex bg-slate-300 border-[1px] w-8/12 " />
       {
@@ -111,8 +108,6 @@ const CreateProject = () => {
           }
         </div>
       }
-
-
       {
         !confirmation.INFO_PROJECT &&
         <InfoProject
@@ -133,6 +128,18 @@ const CreateProject = () => {
           setProject={setProject}
           project={project}
           errors={errors}
+        />
+      }
+      {
+        (confirmation.INFO_PROJECT && confirmation.BUDGET && !confirmation.AGREEMENT) &&
+        <Agreement
+          available={available}
+          errors={errors}
+          confirmInfoProject={confirmInfoProject}
+          confirmation={confirmation}
+          currency={project?.currency}
+          setProject={setProject}
+          project={project}
         />
       }
       {
