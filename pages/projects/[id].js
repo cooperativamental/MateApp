@@ -29,7 +29,8 @@ const PageHomeProjects = () => {
           router.query.holder === "true" ?
             <AdminProjects />
             :
-            <CallProject keyProject={id} />
+            <div></div>
+            // <CallProject keyProject={id} />
         }
 
       </div>
