@@ -33,7 +33,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                     <p className="text-sm text-gray-100 whitespace-nowrap">Treasury rate</p>
                     <p className="text-xs text-[#3BB89F]">A slice of the project’s budget that will be assigned to your DAO Vault</p>
                 </div>
-                <div className="flex justify-center w-[4rem">
+                <div className="flex justify-center w-[4rem]">
                     <input className="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-white bg-no-repeat bg-contain focus:outline-none cursor-pointer shadow-sm" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
                 </div>
             </div>
