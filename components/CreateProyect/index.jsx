@@ -63,8 +63,6 @@ const CreateProject = () => {
 
     setAvailable(((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)))
     setReserve((project?.ratio * (project?.totalNeto - project?.thirdParties?.amount)) / 100)
-    console.log(!!project.totalBruto, ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)) < 0)
-    console.log("resultado", ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)))
     setErrors({
       thirdParties: (project?.totalBruto - project?.thirdParties?.amount) < 0,
       available: !project.totalBruto || ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)) < 0,

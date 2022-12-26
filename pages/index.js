@@ -42,11 +42,9 @@ const PageHomeProjects = () => {
 
   useEffect(() => {
     if(wallet){
-      console.log(wallet.publicKey.toBase58())
       fetch(`/api/solana/getAllProjectsByPubkey?pubkey=${wallet.publicKey.toBase58()}`)
       .then(async (res)=>{
         const projects = await res.json()
-        console.log(projects)
       })
     }
   }, [wallet])
