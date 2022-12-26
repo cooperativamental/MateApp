@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import ComponentButton from "../../components/Elements/ComponentButton";
 // import CallProject from "../../components/CallProject";
 // import AdminProjects from "../../components/AdminProjects";
-import { query } from "firebase/database";
 
 // import styles from "./projectid.module.scss";
 
