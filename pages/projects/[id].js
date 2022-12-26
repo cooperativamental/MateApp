@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import ComponentButton from "../../components/Elements/ComponentButton";
 // import CallProject from "../../components/CallProject";
-import AdminProjects from "../../components/AdminProjects";
+// import AdminProjects from "../../components/AdminProjects";
 import { query } from "firebase/database";
 
 // import styles from "./projectid.module.scss";
@@ -24,7 +24,7 @@ const PageHomeProjects = () => {
           )}
         />
       </div>
-      <div className="flex h-full justify-evenly px-4 mt-8 w-8/12">
+      {/* <div className="flex h-full justify-evenly px-4 mt-8 w-8/12">
         {
           router.query.holder === "true" ?
             <AdminProjects />
@@ -33,7 +33,7 @@ const PageHomeProjects = () => {
             // <CallProject keyProject={id} />
         }
 
-      </div>
+      </div> */}
 
     </>
   );
