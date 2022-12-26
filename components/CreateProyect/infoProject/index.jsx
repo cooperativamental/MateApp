@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import InputSelect from "../../Elements/InputSelect";
 import ComponentButton from "../../Elements/ComponentButton"
 
-const InfoProject = ({ setProject, project, team, confirmInfoProject, confirmation }) => {
+const InfoProject = ({ setProject, project, team, confirmInfoProject }) => {
   // const [project, setProject] = useState({
   //   start: "",
   //   end: "",

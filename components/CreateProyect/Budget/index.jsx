@@ -12,10 +12,11 @@ import { useProgram } from "../../../hooks/useProgram/index.ts"
 import { PublicKey } from "@solana/web3.js";
 
 
-const Budget = ({ setProject, project, confirmInfoProject, available, errors, confirmation }) => {
+const Budget = ({ setProject, project, confirmInfoProject }) => {
     const router = useRouter()
     const [reserve, setReserve] = useState(0)
     const [teams, setTeams] = useState()
+    const [errors, setErrors] = useState({})
 
     const { connection } = useConnection()
     const wallet = useAnchorWallet();
@@ -30,11 +31,14 @@ const Budget = ({ setProject, project, confirmInfoProject, available, errors, co
 
         setProject({
             ...project,
-            totalNeto: (project.totalBruto - (project.totalBruto * (project.ratio / 100))) - project.thirdParties.amount
+            totalNeto: (project.totalBruto - (project.totalBruto * (project.treasuryGroup / 100))) - project.thirdParties.amount
         })
-    }, [project.totalBruto, project.thirdParties, project.ratio])
-
-    console.log(project)
+        setErrors({
+            thirdParties: (project?.totalBruto - project?.thirdParties?.amount) < 0,
+            unavailable: !project.totalBruto || ((project?.totalBruto - project?.thirdParties?.amount) * (1 - (project.treasuryGroup / 100))) < 0,
+            totalNeto: (project.totalBruto - (project.totalBruto * (project.treasuryGroup / 100))) - project.thirdParties.amount <= 0
+        })
+    }, [project.totalBruto, project.thirdParties, project.treasuryGroup])
 
     const handleBudgetProject = (e, data) => {
         const value = Number(e.target.value)
@@ -49,7 +53,7 @@ const Budget = ({ setProject, project, confirmInfoProject, available, errors, co
                 [e.target.name]: value,
 
             })
-        } else if (e.target.name === "ratio") {
+        } else if (e.target.name === "treasuryGroup") {
             if (value > 100) {
                 setProject({
                     ...project,
@@ -69,15 +73,16 @@ const Budget = ({ setProject, project, confirmInfoProject, available, errors, co
         confirmInfoProject("BUDGET", true)
     }
 
+
     return (
         <div className="flex flex-col w-8/12 items-center gap-3">
-            <div className="flex flex-row gap-2 w-full items-center  ">
-                <div className="w-5/12">
-                    <p className="text-sm text-gray-100 whitespace-nowrap text-center ">* Project´s Total Budget</p>
-                    <p className="text-xs text-[#3BB89F] whitespace-nowrap text-center">Invoice total amount without VAT</p>
+            <div className="flex w-full items-center  ">
+                <div className="w-4/12 p-1">
+                    <p className="text-sm text-gray-100 whitespace-nowrap ">* Project´s Total Budget</p>
+                    <p className="text-xs text-[#3BB89F] whitespace-nowrap">Invoice total amount without VAT</p>
                 </div>
                 <InputSelect
-                    inputStyle={`flex appearance-none border text-center rounded-xl w-full h-16 text-xl pl-4 placeholder-slate-100 ${errors?.totalNeto ? " border border-red-600 " : null} `}
+                    inputStyle={`flex w-8/12 appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
                     value={!!project?.totalBruto && project?.totalBruto?.toString()}
                     type="number"
                     name="totalBruto"
@@ -86,30 +91,39 @@ const Budget = ({ setProject, project, confirmInfoProject, available, errors, co
 
                 />
             </div>
-            <div className="flex flex-row gap-2 items-center w-full">
-                <div className="w-5/12">
-                    <p className="text-sm text-gray-100 whitespace-nowrap text-center ">Treasury rate</p>
-                    <p className="text-xs text-[#3BB89F]  text-center">A slice of the project’s budget that will be assigned to your DAO Vault</p>
+
+            <div className="flex w-full items-center">
+                <div className="w-4/12 p-1">
+                    <p className="text-sm text-gray-100 whitespace-nowrap">Treasury rate</p>
+                    <p className="text-xs text-[#3BB89F]">A slice of the project’s budget that will be assigned to your DAO Vault</p>
                 </div>
-                <InputSelect
-                    inputStyle={`flex appearance-none border rounded-xl text-center w-full h-16 text-xl pl-4 placeholder-slate-100 ${errors?.thirdParties ? " border border-red-600 " : null} `}
-                    value={!!project?.ratio && project?.ratio.toString()}
-                    name="ratio"
-                    onChange={(e) => handleBudgetProject(e)}
-                    type="number"
-                    min={0}
-                    max={100}
-                />
+                <div className="flex w-8/12 items-center gap-1">
+                    <InputSelect
+                        inputStyle={`flex w-8/12 appearance-none border rounded-xl text-center h-16 text-xl pl-4 placeholder-slate-100`}
+                        value={!!project?.treasuryGroup && project?.treasuryGroup.toString()}
+                        name="treasuryGroup"
+                        onChange={(e) => handleBudgetProject(e)}
+                        type="number"
+                        min={0}
+                        max={100}
+                    />
+                    <p className="text-center text-sm text-gray-100 ">Add DAO Wallet</p>
+                    <InputSelect
+                        inputStyle={`flex w-3/12 appearance-none border rounded-xl text-centere !h-7 text-xl pl-4 placeholder-slate-100`}
+                        name="group"
+                        onChange={(e) => handleBudgetProject(e)}
+                    />
+                </div>
             </div>
 
 
-            <div className=" flex flex-row gap-2 items-center w-full">
-                <div className="w-5/12">
-                    <p className="text-sm text-gray-100 whitespace-nowrap text-center ">* Third party's budget</p>
-                    <p className="text-xs text-[#3BB89F]  text-center">Other Expenses and not member of the project's team.</p>
+            <div className=" flex flex-row items-center w-full">
+                <div className="w-4/12">
+                    <p className="text-sm text-gray-100 whitespace-nowrap ">* Third party's budget</p>
+                    <p className="text-xs text-[#3BB89F]  ">Other Expenses and not member of the project's team.</p>
                 </div>
                 <InputSelect
-                    inputStyle={`flex appearance-none border rounded-xl w-full h-16 text-center text-xl pl-4 placeholder-slate-100 ${errors?.thirdParties ? " border border-red-600 " : null} `}
+                    inputStyle={`flex appearance-none border rounded-xl w-8/12 h-16 text-center text-xl pl-4 placeholder-slate-100 ${errors?.thirdParties ? " border border-red-600 focus:border-red-600" : null} `}
                     value={!!project?.thirdParties?.amount && project?.thirdParties?.amount.toString()}
                     name="thirdParties"
                     onChange={(e) => handleBudgetProject(e)}
@@ -117,13 +131,13 @@ const Budget = ({ setProject, project, confirmInfoProject, available, errors, co
                     min={0}
                 />
             </div>
-            <div className=" flex flex-row gap-2 items-center w-full">
-                <div className="w-5/12">
-                    <p className="text-sm text-gray-100 whitespace-nowrap text-center ">Project´s Net Budget</p>
-                    <p className="text-xs text-[#3BB89F] text-center">Net budget is what’s left of the Total budget after treasury ratio and Thirds Parties are deducted</p>
+            <div className=" flex flex-row items-center w-full">
+                <div className="w-4/12">
+                    <p className="text-sm text-gray-100 whitespace-nowrap  ">Project´s Net Budget</p>
+                    <p className="text-xs text-[#3BB89F] ">Net budget is what’s left of the Total budget after treasury ratio and Thirds Parties are deducted</p>
                 </div>
                 <InputSelect
-                    inputStyle={`flex appearance-none border text-center rounded-xl w-full h-16 text-xl pl-4 placeholder-slate-100 ${errors?.totalNeto ? " border border-red-600 " : null} `}
+                    inputStyle={`flex appearance-none border text-center rounded-xl w-8/12 h-16 text-xl pl-4 placeholder-slate-100 ${errors?.totalNeto ? " border border-red-600 " : null} `}
                     value={project?.totalNeto?.toString()}
                     onChange={(e) => handleBudgetProject(e)}
                     type="number"
@@ -135,7 +149,7 @@ const Budget = ({ setProject, project, confirmInfoProject, available, errors, co
             <ComponentButton
                 buttonEvent={handleConfirm}
                 buttonText="Confirm Budget"
-                conditionDisabled={available < 0 || errors.thirdParties}
+                conditionDisabled={errors.unavailable || errors.thirdParties || errors.totalNeto}
             />
         </div>
     )
