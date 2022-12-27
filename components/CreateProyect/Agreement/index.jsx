@@ -22,7 +22,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
     }
 
     return (
-        <div className="flex flex-col w-8/12 p-4 gap-8">
+        <div className="flex flex-col items-center w-8/12 p-4 gap-8">
             <div className="flex w-full justify-between items-center text-lg">
                 <p>Available Budget (1)</p>
                 <div className="flex items-center gap-4">
