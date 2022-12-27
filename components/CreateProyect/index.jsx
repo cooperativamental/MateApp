@@ -155,7 +155,7 @@ const CreateProject = () => {
         />
       }
       {
-        confirmation.INFO_PROJECT && confirmation.BUDGET && confirmation.ASSEMBLE_TEAM &&
+        confirmation.INFO_PROJECT && confirmation.BUDGET && confirmation.AGREEMENT && confirmation.PROPOSAL &&
         <PreviewProject setConfirmation={setConfirmation} project={project} setProject={setProject} />
       }
     </div >

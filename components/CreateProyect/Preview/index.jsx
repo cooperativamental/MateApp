@@ -8,12 +8,10 @@ import ComponentButton from "../../Elements/ComponentButton";
 import { useHost } from "../../../context/host";
 
 const PreviewProject = ({ project, setProject, setConfirmation }) => {
-    const db = getDatabase();
 
     const { host } = useHost()
     const router = useRouter()
 
-    const { user } = useAuth()
     const [retrySendProposal, setRetrySendProporsal] = useState({
         status: false,
     })
@@ -36,7 +34,6 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
         <div className="flex flex-col w-8/12 gap-y-8" >
             <div className="flex items-center justify-between w-10/12 h-12">
                 <p className="flex items-start text-lg font-medium">{project.nameProject}</p>
-                <p className="flex items-start text-lg font-medium">{Object.values(project.client).map(client => { return client.clientName })}</p>
             </div>
             <hr className="flex bg-slate-300 border-[1px] w-full" />
             <div className="flex items-center justify-between w-10/12 font-normal ">
@@ -72,7 +69,7 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
             </div>
             <div className="flex items-center h-10 w-full justify-between font-light text-base">
                 <label>Reserve ◎</label>
-                {`${((project?.ratio * (project?.totalNeto - project?.thirdParties?.amount)) / 100).toLocaleString('es-ar', { minimumFractionDigits: 2 })}`}
+                {`${((project?.reserve * (project?.totalNeto - project?.thirdParties?.amount)) / 100).toLocaleString('es-ar', { minimumFractionDigits: 2 })}`}
             </div>
             {
                 renderInfo(project.partners)
@@ -80,16 +77,16 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
             <div className="flex flex-col items-center gap-4 m-4">
 
                 <p className="text-base font-normal">Send proposals to your partners</p>
-                <div className="w-8/12">
-                    <ComponentButton
-                        buttonText="Edit"
-                        buttonEvent={() => { setConfirmation({
+                <ComponentButton
+                    buttonText="Edit"
+                    buttonEvent={() => {
+                        setConfirmation({
                             INFO_PROJECT: false,
                             BUDGET: false,
                             ASSEMBLE_TEAM: false
-                          })}}
-                    />
-                </div>
+                        })
+                    }}
+                />
                 {
                     retrySendProposal.status ?
                         <ComponentButton
@@ -98,7 +95,6 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
                         />
                         :
                         <ComponentButton
-                            buttonEvent={confirmProject}
                             buttonText="Gather Team"
 
                         />
