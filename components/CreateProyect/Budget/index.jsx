@@ -60,7 +60,6 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     [e.target.name]: 100,
                 })
             } else {
-                confirmInfoProject("ASSEMBLE_TEAM", false)
                 setProject({
                     ...project,
                     [e.target.name]: value,
@@ -77,8 +76,8 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
     return (
         <div className="flex flex-col w-8/12 items-center gap-3">
             <div className="flex w-full items-center  ">
-                <div className="w-4/12 p-1">
-                    <p className="text-sm text-gray-100 whitespace-nowrap ">* Project´s Total Budget</p>
+                <div className="w-4/12 p-4">
+                    <p className="text-lg text-gray-100 whitespace-nowrap ">* Project´s Total Budget</p>
                     <p className="text-xs text-[#3BB89F] whitespace-nowrap">Invoice total amount without VAT</p>
                 </div>
                 <InputSelect
@@ -93,9 +92,9 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
             </div>
 
             <div className="flex w-full items-center">
-                <div className="w-4/12 p-1">
-                    <p className="text-sm text-gray-100 whitespace-nowrap">Treasury rate</p>
-                    <p className="text-xs text-[#3BB89F]">A slice of the project’s budget that will be assigned to your DAO Vault</p>
+                <div className="w-4/12 p-4">
+                    <p className="text-lg text-gray-100 whitespace-nowrap">Treasury rate</p>
+                    <p className="text-xs text-[#3BB89F]">A slice of the project’s budget that will be assigned to your DAO.</p>
                 </div>
                 <div className="flex w-8/12 items-center gap-1">
                     <InputSelect
@@ -118,7 +117,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
 
 
             <div className=" flex flex-row items-center w-full">
-                <div className="w-4/12">
+                <div className="w-4/12 p-4">
                     <p className="text-sm text-gray-100 whitespace-nowrap ">* Third party's budget</p>
                     <p className="text-xs text-[#3BB89F]  ">Other Expenses and not member of the project's team.</p>
                 </div>
@@ -132,7 +131,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                 />
             </div>
             <div className=" flex flex-row items-center w-full">
-                <div className="w-4/12">
+                <div className="w-4/12 p-4">
                     <p className="text-sm text-gray-100 whitespace-nowrap  ">Project´s Net Budget</p>
                     <p className="text-xs text-[#3BB89F] ">Net budget is what’s left of the Total budget after treasury ratio and Thirds Parties are deducted</p>
                 </div>

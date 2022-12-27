@@ -36,17 +36,15 @@ const PageHomeProjects = () => {
   const [projects, setProjects] = useState([]);
   const [tabs, setTabs] = useState([
     { name: 'Open', current: true, value: "HOSTING" },
-    { name: 'Invited', current: false, value: "INVITED" },
+    { name: 'Closed', current: false, value: "INVITED" },
   ])
   const [listProjects, setListProjects] = useState([]);
 
   useEffect(() => {
     if(wallet){
-      console.log(wallet.publicKey.toBase58())
       fetch(`/api/solana/getAllProjectsByPubkey?pubkey=${wallet.publicKey.toBase58()}`)
       .then(async (res)=>{
         const projects = await res.json()
-        console.log(projects)
       })
     }
   }, [wallet])
