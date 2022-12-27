@@ -46,7 +46,7 @@ const InputSelect = (props) => {
      else {
           return (
                <input
-                    className={`${inputStyle} flex bg-slate-900 appearance-none rounded-full h-20 text-xl px-4 
+                    className={`${inputStyle} flex bg-slate-900 appearance-none rounded-xl h-20 text-xl px-4 
                          ring-1 caret-slate-100
                          ${conditionError ? " shadow-red-600" : "shadow-green-light"} ${type === "date" && "date"}`}
                     name={name}

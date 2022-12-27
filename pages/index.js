@@ -36,7 +36,7 @@ const PageHomeProjects = () => {
   const [projects, setProjects] = useState([]);
   const [tabs, setTabs] = useState([
     { name: 'Open', current: true, value: "HOSTING" },
-    { name: 'Invited', current: false, value: "INVITED" },
+    { name: 'Closed', current: false, value: "INVITED" },
   ])
   const [listProjects, setListProjects] = useState([]);
 

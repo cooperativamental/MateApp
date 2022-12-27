@@ -11,7 +11,7 @@ const Navbar = () => {
 
   return (
 
-    <nav className="flex relative p-2 items-center justify-between bg-box-color w-full h-[3rem] z-10">
+    <nav className="flex relative p-6 items-center justify-between bg-box-color w-full h-[4rem] z-10">
       <Mate onClick={()=>router.push("/")}/>
       <WalletMultiButton className='!h-full !w-max !bg-[#FA9972] hover:!bg-slate-700 !rounded-3xl !font-thin'/>
     </nav>

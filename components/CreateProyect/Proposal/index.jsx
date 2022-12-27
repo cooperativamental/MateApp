@@ -235,7 +235,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                             inputStyle="w-full !h-10 rounded-md"
                                             value={e?.amount}
                                         />
-                                        <p className="text-xs font-thin">USDC -SOL</p>
+                                        <p className="text-xl font-thin">$</p>
                                     </div>
                                     <div className="w-6/12">
                                         {
@@ -258,10 +258,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                     })
                 }
             </div>
-            <p>Confirm Project Budget</p>
+            <p>Confirm Partners Agreement</p>
             <ComponentButton
                 buttonEvent={handleConfirm}
-                buttonText="Confirm Team"
+                buttonText="Gather Team"
                 buttonStyle={`h-14 ${(!!Object.values(errors).find(error => !!error)) ? "bg-[grey]" : "bg-[#5A31E1]"}`}
                 conditionDisabled={errors.members}
             />
