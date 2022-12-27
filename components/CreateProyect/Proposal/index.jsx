@@ -108,7 +108,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 1
                         })
                     }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     1
                 </button>
@@ -119,7 +119,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 2
                         })
                     }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     2
                 </button>
@@ -130,7 +130,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 3
                         })
                     }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     3
                 </button>
@@ -141,7 +141,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 4
                         })
                     }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     4
                 </button>
@@ -152,7 +152,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 5
                         })
                     }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     5
                 </button>
@@ -163,7 +163,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 6
                         })
                     }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     6
                 </button>
@@ -174,7 +174,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 7
                         })
                     }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     7
                 </button>
@@ -185,7 +185,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 8
                         })
                     }}
-                    className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers.length === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${project?.members?.length === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     8
                 </button>
@@ -196,7 +196,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             nMembers: 9
                         })
                     }}
-                    className={`relative  w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers.length === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    className={`relative  w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${project?.members?.length === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                 >
                     9
                 </button>
@@ -214,7 +214,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             </div>
             <div className="flex flex-col w-full gap-4">
                 {
-                    nMembers?.map((e, index) => {
+                    project?.members?.map((e, index) => {
                         return (
                             <div className="flex flex-col gap-4 p-4 bg-[#1A1735]">
                                 <p className="text-[#FA9972]">
