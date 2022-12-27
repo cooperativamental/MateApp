@@ -22,8 +22,8 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
     }
 
     return (
-        <div className="flex flex-col w-8/12 ">
-            <div className="flex w-full justify-between items-center">
+        <div className="flex flex-col w-8/12 p-4 gap-8">
+            <div className="flex w-full justify-between items-center text-lg">
                 <p>Available Budget (1)</p>
                 <div className="flex items-center gap-4">
                     <InputSelect
@@ -32,12 +32,11 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         inputStyle="text-center"
                     />
                     <div>
-                        <p>USDC</p>
-                        <p>SOL</p>
+                        <p className="text-2xl">$</p>
                     </div>
                 </div>
             </div>
-            <div className="flex w-full items-center">
+            {/* <div className="flex w-full items-center">
                 <div className="w-4/12 p-1">
                     <p className="text-sm text-gray-100 whitespace-nowrap">Treasury rate</p>
                     <p className="text-xs text-[#3BB89F]">
@@ -59,10 +58,10 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                     </div>
                     <p>USDC-SOL: {(project.totalNeto * project.reserve) / 100}</p>
                 </div>
-            </div>
+            </div> */}
             <div className="flex w-full items-center">
                 <div className="w-4/12 p-1">
-                    <p className="text-sm text-gray-100 whitespace-nowrap">Members (n)</p>
+                    <p className="text-lg text-gray-100 whitespace-nowrap">Members (n)</p>
                     <p className="text-xs text-[#3BB89F]">
                         How many partners are involved in the project.
                     </p>
@@ -153,8 +152,9 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
             </div>
 
             <ComponentButton
-                buttonText="Confirm"
+                buttonText="Confirm Members"
                 buttonEvent={handleConfirm}
+                buttonStyle=""
             />
         </div>
     )
