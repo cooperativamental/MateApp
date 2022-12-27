@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import InfoProject from "./infoProject"
 import Budget from "./Budget"
 
+import { useWallet } from '@solana/wallet-adapter-react'
 
 import { useHost } from "../../context/host";
 import { sendEmail } from "../../functions/sendMail"
@@ -16,7 +17,7 @@ import Agreement from "./Agreement";
 const CreateProject = () => {
   const router = useRouter()
   const refContainer = useRef()
-
+  const wallet = useWallet()
   const [errors, setErrors] = useState({})
   const [available, setAvailable] = useState(0)
   const [reserve, setReserve] = useState(0)
@@ -37,7 +38,7 @@ const CreateProject = () => {
     thirdParties: {
       amount: 0
     },
-    members: {},
+    members: [],
     status: "ANNOUNCEMENT",
     currency: "SOL",
     invoiceDate: false,
@@ -58,16 +59,17 @@ const CreateProject = () => {
   useEffect(() => {
     let amountTotalPartners = 0
     project?.members && Object.values(project?.members).forEach(partner => {
+      console.log(partner)
       amountTotalPartners += (partner?.amount || 0)
     })
 
-    setAvailable(((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)))
+    setAvailable(project?.totalNeto - Number((amountTotalPartners).toFixed(3)))
     setReserve((project?.ratio * (project?.totalNeto - project?.thirdParties?.amount)) / 100)
     setErrors({
       thirdParties: (project?.totalBruto - project?.thirdParties?.amount) < 0,
       available: !project.totalBruto || ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100))) - Number((amountTotalPartners).toFixed(3)) < 0,
     })
-  }, [project.totalNeto, project.thirdParties, project.partners, project.ratio])
+  }, [project.totalNeto, project.thirdParties, project.partners, project.ratio, project.members])
 
 
   return (
@@ -77,10 +79,10 @@ const CreateProject = () => {
     >
 
       <div className="flex w-6/12 justify-between font-bold text-base">
-        <p>Project Starter Wallet:</p>
+        <p>Project Starter Wallet: {wallet?.publicKey?.toBase58()}</p>
       </div>
       <hr className=" h-[3px] flex bg-slate-300 border-[1px] w-8/12 " />
-      {
+      {/* {
 
         confirmation.INFO_PROJECT && confirmation.BUDGET && confirmation.AGREEMENT &&
         <div className=" bg-slate-900 w-full  border-[1px] border-x-slate-300 flex flex-col font-bold gap-4 p-4 rounded-lg text-xl">
@@ -105,7 +107,7 @@ const CreateProject = () => {
             <p className=" text-sm font-medium">You cannot exceed the budget available for your team.</p>
           }
         </div>
-      }
+      } */}
       {
         !confirmation.INFO_PROJECT &&
         <InfoProject

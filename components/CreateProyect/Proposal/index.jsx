@@ -8,101 +8,76 @@ import InputSelect from "../../Elements/InputSelect"
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useProgram } from "../../../hooks/useProgram/index.ts"
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
+import { TokenPocketWalletAdapter } from "@solana/wallet-adapter-wallets"
 
 const AssembleTeam = ({ project, setProject, confirmInfoProject, available, errors, confirmation }) => {
     const router = useRouter()
 
     const [assembleTeam, setAssembleTeam] = useState()
-    const [partners, setPartners] = useState()
+    const [nMembers, setNmembers] = useState([])
     const [selectPartners, setSelectPartners] = useState()
 
     const { connection } = useConnection()
     const wallet = useAnchorWallet();
     const { program } = useProgram({ connection, wallet });
 
-
-    const handleBudgetProject = (e, data) => {
-        const value = Number(e.target.value)
-        if (e.target.name === "amountPartners" || e.target.name === "percentage" || e.target.name === "wallet") {
-            if (e.target.name === "wallet") {
-                setProject({
-                    ...project,
-                    members: {
-                        ...project.members,
-                        [data.uid]: {
-                            ...project.members[data.uid],
-                            [e.target.name]: e.target.value
-                        }
-                    },
-                    projectHolder: {
-                        [data.uid]: {
-                            ...project.projectHolder[data.uid],
-                            [e.target.name]: e.target.value
-                        }
-                    }
-                })
-            }
-            if (e.target.name === "percentage") {
-                setProject({
-                    ...project,
-                    members: {
-                        ...project.members,
-                        [data.uid]: {
-                            ...project.members[data.uid],
-                            name: data.partner.name,
-                            status: user.uid !== data.uid ? "ANNOUNCEMENT" : "CONFIRMED",
-                            percentage: value,
-                            amount: (value * ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100)))) / 100,
-                            email: data.partner.email,
-                        }
-                    },
-                })
-            }
-            if (e.target.name === "amountPartners") {
-                setProject({
-                    ...project,
-                    members: {
-                        ...project.members,
-                        [data.uid]: {
-                            ...project.members[data.uid],
-                            name: data.partner.name,
-                            amount: value,
-                            percentage: (value / ((project?.totalNeto - project?.thirdParties?.amount) * (1 - (project.ratio / 100)))) * 100,
-                            status: user.uid !== data.uid ? "ANNOUNCEMENT" : "CONFIRMED",
-                            email: data.partner.email,
-                        }
-                    }
-                })
-            }
-        }
-    }
-
-    const modifyBudget = () => {
-        setAssembleTeam(false)
-        setProject({
-            ...project,
-            members: {
-                [user.uid]: {
-                    ...project.members[user.uid],
-                    amount: 0,
-                    percentage: 0
+    useEffect(() => {
+        const newArrayMembers = new Array(project.nMembers).fill(0)
+        const members = newArrayMembers.map((e, index) => {
+            if (index === 0) {
+                return {
+                    address: wallet?.publicKey?.toBase58()
+                }
+            } else {
+                return {
+                    address: ""
                 }
             }
         })
-    }
+        setProject({
+            ...project,
+            members: members
+        })
 
-    const renderInfo = (info) => {
-        if (info) {
-            return Object.entries(info).map(([key, value]) => {
-                return (
-                    <div key={key} className="flex flex-row h-10 w-full justify-between font-medium text-base items-center border-b-2 border-slate-300">
-                        <label>{value.name}</label>
-                        <p>{value.amount.toLocaleString('es-ar', { minimumFractionDigits: 2 })}</p>
-                    </div>
-                )
+    }, [wallet])
+
+    const handlerMembers = (e, index) => {
+        const value = Number(e.target.value)
+
+        if (e.target.name === "address") {
+            const statemembers = project.members.map((e, i) => {
+                if (index === i) {
+                    return {
+                        ...e,
+                        address: value
+                    }
+                }
+            })
+
+            setProject({
+                ...project,
+                members: statemembers
             })
         }
-    };
+        if (e.target.name === "percentage") {
+            const statemembers = project.members.map((e, i) => {
+                if (index === i) {
+                    return {
+                        ...e,
+                        percentage: value,
+                        amount: (value * project.totalNeto) / 100
+                    }
+                } else {
+                    return e
+                }
+            })
+            setProject({
+                ...project,
+                members: statemembers
+            })
+        }
+    }
 
     const removeSelect = (idPartner) => {
         const { [idPartner]: _, ...restPartners } = selectPartners
@@ -120,66 +95,164 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
 
     return (
         <div className="flex flex-col text-center gap-8 items-center w-8/12" >
-            <h1 className=" text-4xl font-medium">Assemble your team of partners</h1>
-            <div className="flex flex-col sm:grid w-full sm:grid-cols-2 gap-4">
+            <div className="flex w-full justify-between">
+                <p>Available</p>
+                <p className="text-xl">{available}</p>
+            </div>
+            <div className="w-full overflow-hidden rounded-md">
+
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 1
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    1
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 2
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    2
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 3
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    3
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 4
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    4
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 5
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    5
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 6
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    6
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 7
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers.length === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    7
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 8
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers.length === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    8
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 9
+                        })
+                    }}
+                    className={`relative  w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers.length === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    9
+                </button>
+                <button
+                    onClick={() => {
+                        setProject({
+                            ...project,
+                            nMembers: 10
+                        })
+                    }}
+                    className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                >
+                    10
+                </button>
+            </div>
+            <div className="flex flex-col w-full gap-4">
                 {
-                    selectPartners && Object.entries(selectPartners).map(([key, select]) => {
+                    nMembers?.map((e, index) => {
                         return (
-                            <div key={key} className={`flex flex-col rounded-xl border-[1px] border-white bg-zinc-800 shadow-lg shadow-zinc-700 p-2 gap-2`}>
-                                <label className="flex flex-row justify-between w-full bg-zinc-700  rounded-xl text-lg font-normal h-12 p-2" htmlFor="partners">
-                                    {select?.name}
-                                    {
-                                        user.uid !== key &&
-                                        <button className="flex text-center justify-center items-center max-h-min w-min  rounded-full bg-black text-white text-base pl-3 pr-3" onClick={() => removeSelect(key)}>
-                                            X
-                                        </button>
-                                    }
-                                </label>
-                                <div className=" flex columns-3 gap-4">
-                                    <div className="flex flex-col items-center w-full">
-                                        <h2 className=" font-medium">Amount</h2>
+                            <div className="flex flex-col gap-4 p-4 bg-[#1A1735]">
+                                <p className="text-[#FA9972]">
+                                    Member {index + 1}
+                                </p>
+                                <div className="flex w-full gap-4">
+                                    <div className="flex h-min items-center w-2/12">
                                         <InputSelect
-                                            inputStyle=" border shadow-none rounded-xl w-full h-16 text-xl p-4"
                                             type="number"
-                                            name="amountPartners"
-                                            value={project?.partners?.[key]?.amount?.toString()}
-                                            onChange={(e) => handleBudgetProject(e, { uid: key, partner: select })}
-                                            min={0}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col mt-6 justify-center w-min text-base font-bold ">
-                                        <p> &gt; </p>
-                                        <p> &lt; </p>
-                                    </div>
-                                    <div className="flex flex-col items-center w-full">
-                                        <h2 className=" font-medium">%</h2>
-                                        <InputSelect
-                                            inputStyle="shadow-none border rounded-xl w-full h-16 text-xl p-4"
-                                            type="number"
+                                            inputStyle="w-full !h-10 rounded-md"
                                             name="percentage"
-                                            value={project?.partners?.[key]?.percentage?.toString()}
-                                            onChange={(e) => handleBudgetProject(e, { uid: key, partner: select })}
-                                            min={0}
+                                            onChange={(e) => handlerMembers(e, index)}
                                         />
+                                        <p>%</p>
+                                    </div>
+                                    <div className="w-3/12">
+                                        <InputSelect
+                                            inputStyle="w-full !h-10 rounded-md"
+                                            value={e?.amount}
+                                        />
+                                        <p className="text-xs font-thin">USDC -SOL</p>
+                                    </div>
+                                    <div className="w-6/12">
+                                        {
+                                            !wallet && index === 0 ?
+                                                <WalletMultiButton className='!h-10 !w-max !bg-[#FA9972] hover:!bg-slate-700 !rounded-md !font-thin' />
+                                                :
+                                                <InputSelect
+                                                    inputStyle="w-full !h-10 rounded-md"
+                                                    placeHolder={e.address}
+                                                    disabled={index === 0}
+                                                    name="address"
+                                                />
+
+                                        }
+                                        <p className="text-xs font-thin">Member Wallet</p>
                                     </div>
                                 </div>
-                                <span className=" text-xs">Fee proposal or grant remuneration</span>
-                                {
-                                    project.fiatOrCrypto === "CRYPTO" &&
-                                    (
-                                        user.uid === key &&
-                                        <>
-                                            <InputSelect
-                                                optionDisabled="SelectWallet"
-                                                name="wallet"
-                                                title="Select your wallet"
-                                                value={project?.partners?.[key]?.wallet}
-                                                disabled
-                                            />
-                                        </>
-
-                                    )
-                                }
                             </div>
                         )
                     })
@@ -192,7 +265,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                 buttonStyle={`h-14 ${(!!Object.values(errors).find(error => !!error)) ? "bg-[grey]" : "bg-[#5A31E1]"}`}
                 conditionDisabled={errors.members}
             />
-        </div>
+        </div >
 
     )
 }

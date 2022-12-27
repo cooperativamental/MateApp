@@ -60,7 +60,6 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     [e.target.name]: 100,
                 })
             } else {
-                confirmInfoProject("ASSEMBLE_TEAM", false)
                 setProject({
                     ...project,
                     [e.target.name]: value,

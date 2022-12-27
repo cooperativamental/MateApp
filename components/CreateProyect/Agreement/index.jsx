@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { Component, useState } from "react"
 import { useEffect } from "react"
+import ComponentButton from "../../Elements/ComponentButton"
 import InputSelect from "../../Elements/InputSelect"
 
 
@@ -11,7 +12,14 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
         setAvailable(project.totalNeto * (1 - (project?.reserve / 100)))
     }, [project.reserve])
 
-
+    const handleConfirm = () => {
+        setProject({
+            ...project,
+            nMembers: nMembers,
+            availableTeam: available
+        })
+        confirmInfoProject("AGREEMENT", true)
+    }
 
     return (
         <div className="flex flex-col w-8/12 ">
@@ -59,60 +67,95 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         How many partners are involved in the project.
                     </p>
                 </div>
-                <div className="overflow-hidden rounded-md">
+                <div className="w-full overflow-hidden rounded-md">
 
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(1)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         1
                     </button>
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(2)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         2
                     </button>
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(3)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         3
                     </button>
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(4)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         4
                     </button>
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(5)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         5
                     </button>
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(6)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         6
                     </button>
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(7)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         7
                     </button>
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(8)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         8
                     </button>
                     <button
-                        className={`relative  w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        onClick={() => {
+                            setNmembers(9)
+                        }}
+                        className={`relative  w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         9
                     </button>
                     <button
-                        className={`relative w-[10%] items-center border px-4 py-2 text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"} rounded-r-md`}
+                        onClick={() => {
+                            setNmembers(10)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         10
                     </button>
                 </div>
             </div>
+
+            <ComponentButton
+                buttonText="Confirm"
+                buttonEvent={handleConfirm}
+            />
         </div>
     )
 }
