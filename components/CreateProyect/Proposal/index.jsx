@@ -261,7 +261,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             <p>Confirm Partners Agreement</p>
             <ComponentButton
                 buttonEvent={handleConfirm}
-                buttonText="Gather Team"
+                buttonText="View Proposal"
                 buttonStyle={`h-14 ${(!!Object.values(errors).find(error => !!error)) ? "bg-[grey]" : "bg-[#5A31E1]"}`}
                 conditionDisabled={errors.members}
             />
