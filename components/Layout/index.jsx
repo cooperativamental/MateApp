@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
   return (
     <div className="bg-[#131128] h-screen w-screen ">
       <Navbar />
-      <main className={`overflow-y-auto py-8 flex h-[calc(100vh_-_3rem)] justify-center scrollbar`} >
+      <main className={`overflow-y-auto py-8 flex h-[calc(100vh_-_4rem)] justify-center scrollbar`} >
         {children}
       </main>
     </div>
