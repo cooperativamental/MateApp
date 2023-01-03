@@ -83,7 +83,7 @@ const PageHomeProjects = () => {
         buttonText="Start a project"
         buttonEvent={() => router.push("/createproject")}
       />
-      <h3 className="text-2xl font-bold">Projects Contracts</h3>
+      <h3 className="text-2xl font-bold">A protocol to share ownership of a project. Try demo on Solana Devnet.</h3>
       <HeadBar
         event={(value) => {
           setShowProject(value)
