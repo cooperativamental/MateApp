@@ -36,7 +36,8 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
         })
         console.log(tx)
         handlePopUp({
-            text: `https://explorer.solana.com/tx/${tx}?cluster=devnet`
+            text: 
+            `https://explorer.solana.com/tx/${tx}?cluster=devnet`
             ,
             onClick: () => {
                 router.push("/")
