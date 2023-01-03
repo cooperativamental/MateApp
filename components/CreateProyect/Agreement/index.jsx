@@ -46,7 +46,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         inputStyle="text-center"
                     />
                     <div>
-                        <p className="text-2xl">$</p>
+                        <p className="text-2xl">◎ SOL</p>
                     </div>
                 </div>
             </div>
