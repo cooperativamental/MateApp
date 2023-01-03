@@ -100,19 +100,21 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
             {
                 renderInfo(project.members)
             }
-            <div className="flex flex-col items-center gap-4 m-4">
+            <div className="flex flex-col items-center gap-4 m-4 ">
 
-                <p className="text-base font-normal">Send proposals to your partners</p>
-                <ComponentButton
-                    buttonText="Edit"
-                    buttonEvent={() => {
+                <p className="text-base font-normal text-center">Send proposals to your partners. Be sure to have your Phantom Wallet on Devnet.</p>
+                <button
+                    className="bg-none underline underline-offset-auto"
+                    onClick={() => {
                         setConfirmation({
                             INFO_PROJECT: false,
                             BUDGET: false,
                             ASSEMBLE_TEAM: false
                         })
                     }}
-                />
+                >
+                    Edit
+                </button>
                 {
                     retrySendProposal.status ?
                         <ComponentButton

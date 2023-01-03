@@ -59,52 +59,55 @@ const CallProject = ({ keyProject }) => {
       </div>
       <hr className="h-[3px] bg-slate-300 border-[1px] w-full" />
 
-      <div>
-        <h3>The proposal:</h3>
-        {
-          project?.account?.members.map(memb => {
-            if (memb.pubkey === wallet?.publicKey?.toBase58()) {
-              console.log(memb, project)
-              return (
-                <div className={`flex items-center text-black justify-between w-full py-1 px-6 rounded-md ${memb.status === "INVITED" ? "bg-[#FA9972]" : "bg-[#3BB89F]"}`}>
-                  <p>You</p>
-                  <div className="flex gap-4 items-center">
+      {
+        wallet &&
+        <div>
+          <h3>The proposal:</h3>
+          {
+            project?.account?.members.map(memb => {
+              if (memb.pubkey === wallet?.publicKey?.toBase58()) {
+                console.log(memb, project)
+                return (
+                  <div className={`flex items-center text-black justify-between w-full py-1 px-6 rounded-md ${memb.status === "INVITED" ? "bg-[#FA9972]" : "bg-[#3BB89F]"}`}>
+                    <p>You</p>
+                    <div className="flex gap-4 items-center">
 
-                    <p>
-                      {(Number(project.account.amount) * memb.amount) / 100}
-                    </p>
-                    <div className="flex gap-2 items-center">
                       <p>
-                        {memb.amount}
+                        {(Number(project.account.amount) * memb.amount) / 100}
                       </p>
-                      <div className="text-[.5rem]">
+                      <div className="flex gap-2 items-center">
                         <p>
-                          USDC
+                          {memb.amount}
                         </p>
-                        <p>SOL</p>
+                        <div className="text-[.5rem]">
+                          <p>
+                            USDC
+                          </p>
+                          <p>SOL</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  {
-                    memb.status === "INVITED" ?
-                      <ComponentButton
-                        buttonText="Sign Contract"
-                        buttonEvent={() => signContract(memb.pubkey)}
-                        buttonStyle="h-6 text-base"
-                      />
+                    {
+                      memb.status === "INVITED" ?
+                        <ComponentButton
+                          buttonText="Sign Contract"
+                          buttonEvent={() => signContract(memb.pubkey)}
+                          buttonStyle="h-6 text-base"
+                        />
                         :
-                      <p>CONFIRMED</p>
-                  }
-                </div>
-              )
-            }
+                        <p>CONFIRMED</p>
+                    }
+                  </div>
+                )
+              }
 
-          })
+            })
 
-        }
-      </div>
+          }
+        </div>
+      }
       <div >
-        <h3>The proposal:</h3>
+        <h3>The Team:</h3>
         <div className="flex flex-col gap-4">
           {
             project?.account?.members.map(memb => {

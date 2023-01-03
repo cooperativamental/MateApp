@@ -15,20 +15,7 @@ const PageHomeProjects = () => {
 
 
   return (
-    <>
-      <div className="mt-8">
-        <ComponentButton
-          isBack
-          routeBack={() => router.push({
-            pathname: "/projects",
-          }
-          )}
-        />
-      </div>
-
       <CallProject keyProject={id} />
-
-    </>
   );
 };
 

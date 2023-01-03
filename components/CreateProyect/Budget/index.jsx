@@ -75,13 +75,13 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
 
     return (
         <div className="flex flex-col w-8/12 items-center gap-3">
-            <div className="flex w-full items-center  ">
-                <div className="w-4/12 p-4">
+            <div className="flex w-full items-center justify-between">
+                <div className="w-5/12 p-4">
                     <p className="text-lg text-gray-100 whitespace-nowrap ">* Project´s Total Budget</p>
-                    <p className="text-xs text-[#3BB89F] whitespace-nowrap">Invoice total amount without VAT and fill in all the fields to activate the button" por "Add a name to the project.</p>
+                    <p className="text-xs text-[#3BB89F]">Invoice total amount without VAT and third parties costs. Only team´s budget.</p>
                 </div>
                 <InputSelect
-                    inputStyle={`flex w-8/12 appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
+                    inputStyle={`flex w-6/12 appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
                     value={!!project?.totalBruto && project?.totalBruto?.toString()}
                     type="number"
                     name="totalBruto"
