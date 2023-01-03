@@ -92,7 +92,7 @@ const CallProject = ({ keyProject }) => {
                         buttonEvent={() => signContract(memb.pubkey)}
                         buttonStyle="h-6 text-base"
                       />
-                      :
+                        :
                       <p>CONFIRMED</p>
                   }
                 </div>

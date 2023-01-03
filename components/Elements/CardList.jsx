@@ -3,13 +3,13 @@ import { CalendarIcon, ChevronRightIcon, UsersIcon } from '@heroicons/react/20/s
 import { useState } from "react"
 import ComponentButton from "./ComponentButton"
 
-export default function CardList({ list }) {
+export default function CardList({ list, noResults }) {
     const [namePartner, setNamePartner] = useState()
 
     if (!list?.length) {
         return (
             <div className="flex w-full justify-center text-white items-center">
-                No results found
+                {noResults}
             </div>
         )
     } else {

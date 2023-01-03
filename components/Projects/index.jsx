@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import CardList from "../Elements/CardList";
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
 
 const Projects = ({ projects, fnProjects, queryId }) => {
   const router = useRouter();
   const [selected, setSelected] = useState(queryId ? queryId : false);
   const [listProject, setListProjects] = useState([])
   const [sorting, setSorting] = useState(undefined)
+  const wallet = useAnchorWallet();
+
   const refProject = useRef()
 
   useEffect(() => {
@@ -47,10 +50,15 @@ const Projects = ({ projects, fnProjects, queryId }) => {
 
   return (
     <div className="w-full text-center table-fixed border-slate-200">
-      <CardList list={listProject} noResults="No projects yet"/>
       {
-        !listProject?.length &&
-        <p>Connect your wallet to start a project.</p>
+        wallet
+          ?
+          <>
+            <CardList list={listProject} noResults="No projects yet" />
+          </>
+          :
+          <p>Connect your wallet to start a project.</p>
+
       }
     </div>
   );
