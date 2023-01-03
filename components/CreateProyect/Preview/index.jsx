@@ -54,7 +54,7 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
                                 <p>Member</p>
                                 <div className="flex gap-4 items-center">
                                     <p>
-                                        {(Number(project?.totalBruto) * memb.amount) / 100} %
+                                        {(memb.amount / Number(project?.totalBruto)) * 100} %
                                     </p>
                                     <div className="flex gap-2 items-center">
                                         <p>
