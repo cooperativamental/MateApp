@@ -77,7 +77,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
         <div className="flex flex-col w-8/12 items-center gap-3">
             <div className="flex w-full items-center justify-between">
                 <div className="w-5/12 p-4">
-                    <p className="text-lg text-gray-100 whitespace-nowrap ">* Project´s Total Budget</p>
+                    <p className="text-lg text-gray-100 whitespace-nowrap ">* Project´s Net Budget</p>
                     <p className="text-xs text-[#3BB89F]">Invoice total amount without VAT and third parties costs. Only team´s budget.</p>
                 </div>
                 <InputSelect

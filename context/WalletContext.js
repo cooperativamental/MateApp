@@ -15,7 +15,7 @@ export default function WalletContextProvider({ children }) {
 
   return (
     <ConnectionProvider endpoint={endpoint}>
-      <WalletProvider wallets={[phantom, solflare]}>
+      <WalletProvider wallets={[phantom, solflare]} autoConnect>
         <WalletModalProvider>{children}</WalletModalProvider>
       </WalletProvider>
     </ConnectionProvider>
