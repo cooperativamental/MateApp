@@ -49,7 +49,7 @@ const Projects = ({ projects, fnProjects, queryId }) => {
     <div className="w-full text-center table-fixed border-slate-200">
       <CardList list={listProject} noResults="No projects yet"/>
       {
-        !listProject.length &&
+        !listProject?.length &&
         <p>Connect your wallet to start a project.</p>
       }
     </div>

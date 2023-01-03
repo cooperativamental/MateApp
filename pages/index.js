@@ -45,7 +45,8 @@ const PageHomeProjects = () => {
       fetch(`/api/solana/getAllProjectsByMemberPubKey?pubkey=${wallet.publicKey.toBase58()}`)
         .then(async (res) => {
           const json = await res.json()
-          const listProject = json.projects.map(prj => {
+          console.log(json)
+          const listProject = json?.projects?.map(prj => {
             return {
               ...prj.account,
               publicKey: prj.publicKey,
@@ -59,13 +60,13 @@ const PageHomeProjects = () => {
             }
           })
           if (showProject !== "CLOSED") {
-            const open = listProject.filter(prj => {
+            const open = listProject?.filter(prj => {
               return prj.status !== "PAID"
             })
             setProjects(open)
 
           } else {
-            const closed = listProject.filter(prj =>
+            const closed = listProject?.filter(prj =>
               prj.status === "PAID"
             )
             setProjects(closed)

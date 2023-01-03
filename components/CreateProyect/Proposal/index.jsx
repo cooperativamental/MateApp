@@ -9,7 +9,6 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useProgram } from "../../../hooks/useProgram/index.ts"
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
-import { TokenPocketWalletAdapter } from "@solana/wallet-adapter-wallets"
 
 const AssembleTeam = ({ project, setProject, confirmInfoProject, available, errors, confirmation }) => {
     const router = useRouter()
@@ -23,16 +22,11 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
     const { program } = useProgram({ connection, wallet });
 
     useEffect(() => {
-        const newArrayMembers = new Array(project.nMembers).fill(0)
-        const members = newArrayMembers.map((memb, index) => {
-            console.log(memb)
+        const members = project.members.map((memb, index) => {
             if (index === 0) {
                 return {
-                    address: wallet?.publicKey?.toBase58()
-                }
-            } else if (!memb.address) {
-                return {
-                    address: ""
+                    ...memb,
+                    address: wallet?.publicKey?.toBase58() || ""
                 }
             } else {
                 return memb

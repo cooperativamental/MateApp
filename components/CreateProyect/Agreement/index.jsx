@@ -2,20 +2,34 @@ import { Component, useState } from "react"
 import { useEffect } from "react"
 import ComponentButton from "../../Elements/ComponentButton"
 import InputSelect from "../../Elements/InputSelect"
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
 
 
 const Agreement = ({ setProject, project, confirmInfoProject }) => {
     const [available, setAvailable] = useState()
     const [nMembers, setNmembers] = useState()
+    const wallet = useAnchorWallet();
 
     useEffect(() => {
         setAvailable(project.totalNeto * (1 - (project?.reserve / 100)))
     }, [project.reserve])
 
     const handleConfirm = () => {
+        const newArrayMembers = new Array(nMembers).fill(0)
+        const members = newArrayMembers.map((memb, index) => {
+            if (index === 0) {
+                return {
+                    address: wallet?.publicKey?.toBase58()
+                }
+            } else if (!memb.address) {
+                return {
+                    address: ""
+                }
+            }
+        })
         setProject({
             ...project,
-            nMembers: nMembers,
+            members: members,
             availableTeam: available
         })
         confirmInfoProject("AGREEMENT", true)

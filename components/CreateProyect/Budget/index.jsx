@@ -130,7 +130,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     min={0}
                 />
             </div> */}
-            <div className=" flex flex-row items-center w-full">
+            {/* <div className=" flex flex-row items-center w-full">
                 <div className="w-4/12 p-4">
                     <p className="text-sm text-gray-100 whitespace-nowrap  ">Project´s Net Budget</p>
                     <p className="text-xs text-[#3BB89F] ">Net budget is what’s left of the Total budget after treasury ratio and Thirds Parties are deducted</p>
@@ -143,7 +143,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     min={0}
                     disabled
                 />
-            </div>
+            </div> */}
 
             <ComponentButton
                 buttonEvent={handleConfirm}
