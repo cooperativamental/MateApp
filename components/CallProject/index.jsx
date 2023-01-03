@@ -74,7 +74,7 @@ const CallProject = ({ keyProject }) => {
                     <div className="flex gap-4 items-center">
 
                       <p>
-                        {(Number(project.account.amount) * memb.amount) / 100}
+                        {( memb.amount / Number(project.account.amount)) * 100}
                       </p>
                       <div className="flex gap-2 items-center">
                         <p>
