@@ -49,6 +49,7 @@ const CallProject = ({ keyProject }) => {
       })
       .rpc();
     console.log(`https://explorer.solana.com/tx/${tx}?cluster=devnet`);
+    router.reload()
   }
 
   return (

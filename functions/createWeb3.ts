@@ -49,36 +49,8 @@ export const useCreateWeb3 = () => {
           })
           .rpc()
     
-          console.log(tx, `https://explorer.solana.com/tx/${tx}?cluster=devnet`)
-
-        // const storedProject = await program.account.project.fetch(pdaPublicKey)
-        // console.log(storedProject)
-    
-        // const tx = await program.methods
-        //     .createProject(
-        //         name,
-        //         "",
-        //         "",
-        //         0,
-        //         payments as unknown as Mate["types"][0]
-        //         ,
-        //         new anchor.BN(0),
-        //         "",
-        //         amount,
-        //         0,
-        //         new anchor.BN(Date.now()),
-        //         new anchor.BN(Date.now()),
-        //         ""
-        //     )
-        //     .accounts({
-        //         project: pdaPublicKey,
-        //         payer: wallet.publicKey,
-        //         systemProgram: web3.SystemProgram.programId,
-        //     })
-        //     .rpc()
-
         return {
-            // tx,
+            tx,
             keyProject: pdaPublicKey.toBase58(),
             keyTreasury: pdaPublicKey
         }

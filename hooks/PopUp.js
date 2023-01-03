@@ -18,14 +18,6 @@ const PopUpProvider = ({ children }) => {
         onClick: null,
     });
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setPopUp({
-    //             ...popUp,
-    //             status: false
-    //         })
-    //     }, 4000);
-    // }, []);
 
     const handlePopUp = (config) => {
         setOpen(true)
@@ -46,13 +38,7 @@ const PopUpProvider = ({ children }) => {
                         </div>
                         <ComponentButton
                             buttonText="Close"
-                            buttonEvent={() => popUp?.onClick ?
-                                (
-                                    popUp.onClick(),
-                                    setOpen(false)
-                                )
-                                :
-                                setOpen(false)}
+                            buttonEvent={() => popUp?.onClick ? popUp.onClick() : setOpen(false) }
                             buttonStyle="w-min"
                         />
 

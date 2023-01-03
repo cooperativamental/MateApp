@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 import ComponentButton from "../../Elements/ComponentButton";
 
+import { usePopUp } from "../../../context/PopUp";
 import { useHost } from "../../../context/host";
 import { useCreateWeb3 } from "../../../functions/createWeb3.ts"
 import { PublicKey } from "@solana/web3.js";
@@ -15,22 +16,31 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
 
     const { host } = useHost()
     const router = useRouter()
+    const { handlePopUp } = usePopUp()
     const { createProject } = useCreateWeb3()
     const [retrySendProposal, setRetrySendProporsal] = useState({
         status: false,
     })
 
-    const create = () => {
+    const create = async () => {
         const members = project.members.map(memb => {
             return {
                 member: new PublicKey(memb.address),
                 amount: new BN(memb.amount)
             }
         })
-        createProject({
+        const {tx} = await createProject({
             name: project.nameProject,
             payments: members,
             amount: new BN(project.totalBruto)
+        })
+        console.log(tx)
+        handlePopUp({
+            text: `https://explorer.solana.com/tx/${tx}?cluster=devnet`
+            ,
+            onClick: () => {
+                router.push("/")
+            }
         })
     }
     const renderInfo = info => {
@@ -44,16 +54,13 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
                                 <p>Member</p>
                                 <div className="flex gap-4 items-center">
                                     <p>
-                                        {(Number(project?.totalBruto) * memb.amount) / 100}
+                                        {(Number(project?.totalBruto) * memb.amount) / 100} %
                                     </p>
                                     <div className="flex gap-2 items-center">
                                         <p>
                                             {memb.amount}
                                         </p>
                                         <div className="text-[.5rem]">
-                                            <p>
-                                                USDC
-                                            </p>
                                             <p>SOL</p>
                                         </div>
                                     </div>
@@ -76,9 +83,6 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
             </div>
         )
     };
-
-
-    console.log(project)
 
     return (
         <div className="flex flex-col w-8/12 gap-y-8" >
