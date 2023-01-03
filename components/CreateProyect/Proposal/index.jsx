@@ -24,15 +24,18 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
 
     useEffect(() => {
         const newArrayMembers = new Array(project.nMembers).fill(0)
-        const members = newArrayMembers.map((e, index) => {
+        const members = newArrayMembers.map((memb, index) => {
+            console.log(memb)
             if (index === 0) {
                 return {
                     address: wallet?.publicKey?.toBase58()
                 }
-            } else {
+            } else if (!memb.address) {
                 return {
                     address: ""
                 }
+            } else {
+                return memb
             }
         })
         setProject({
@@ -46,12 +49,14 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
         const value = Number(e.target.value)
 
         if (e.target.name === "address") {
-            const statemembers = project.members.map((e, i) => {
+            const statemembers = project.members.map((memb, i) => {
                 if (index === i) {
                     return {
-                        ...e,
-                        address: value
+                        ...memb,
+                        address: e.target.value
                     }
+                } else {
+                    return memb
                 }
             })
 
@@ -61,15 +66,14 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             })
         }
         if (e.target.name === "percentage") {
-            const statemembers = project.members.map((e, i) => {
+            const statemembers = project.members.map((memb, i) => {
                 if (index === i) {
                     return {
-                        ...e,
-                        percentage: value,
+                        ...memb,
                         amount: (value * project.totalNeto) / 100
                     }
                 } else {
-                    return e
+                    return memb
                 }
             })
             setProject({
@@ -244,9 +248,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                                 :
                                                 <InputSelect
                                                     inputStyle="w-full !h-10 rounded-md"
-                                                    placeHolder={e.address}
+                                                    placeHolder={e?.address}
                                                     disabled={index === 0}
                                                     name="address"
+                                                    onChange={(e) => handlerMembers(e, index)}
                                                 />
 
                                         }

@@ -91,7 +91,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                 />
             </div>
 
-            <div className="flex w-full items-center">
+            {/* <div className="flex w-full items-center">
                 <div className="w-4/12 p-4">
                     <p className="text-lg text-gray-100 whitespace-nowrap">Treasury rate</p>
                     <p className="text-xs text-[#3BB89F]">A slice of the project’s budget that will be assigned to your DAO.</p>
@@ -113,10 +113,10 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                         onChange={(e) => handleBudgetProject(e)}
                     />
                 </div>
-            </div>
+            </div> */}
 
 
-            <div className=" flex flex-row items-center w-full">
+            {/* <div className=" flex flex-row items-center w-full">
                 <div className="w-4/12 p-4">
                     <p className="text-sm text-gray-100 whitespace-nowrap ">* Third party's budget</p>
                     <p className="text-xs text-[#3BB89F]  ">Other Expenses and not member of the project's team.</p>
@@ -129,7 +129,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     type="number"
                     min={0}
                 />
-            </div>
+            </div> */}
             <div className=" flex flex-row items-center w-full">
                 <div className="w-4/12 p-4">
                     <p className="text-sm text-gray-100 whitespace-nowrap  ">Project´s Net Budget</p>

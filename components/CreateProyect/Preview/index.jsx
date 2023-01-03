@@ -1,22 +1,36 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { sendEmail } from "../../../functions/sendMail.js"
 
 import ComponentButton from "../../Elements/ComponentButton";
 
 import { useHost } from "../../../context/host";
+import { useCreateWeb3 } from "../../../functions/createWeb3.ts"
+import { PublicKey } from "@solana/web3.js";
+import { BN } from "@project-serum/anchor";
 
 const PreviewProject = ({ project, setProject, setConfirmation }) => {
 
     const { host } = useHost()
     const router = useRouter()
-
+    const { createProject } = useCreateWeb3()
     const [retrySendProposal, setRetrySendProporsal] = useState({
         status: false,
     })
-
-
+    
+    const create = () => {
+        const members = project.members.map(memb => {
+            return {
+                member: new PublicKey(memb.address),
+                amount: new BN(memb.amount)
+            }
+        })
+        createProject({
+            name: project.nameProject,
+            payments: members,
+            amount: new BN(project.totalBruto)
+        })
+    }
     const renderInfo = (info) => {
         if (info) {
             return Object.entries(info).map(([key, value]) => {
@@ -96,7 +110,7 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
                         :
                         <ComponentButton
                             buttonText="Gather Team"
-
+                            buttonEvent={create}
                         />
 
                 }

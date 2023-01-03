@@ -5,40 +5,80 @@ import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useConnection } from "@solana/wallet-adapter-react"
 import { useProgram } from "../hooks/useProgram/index"
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
+import { Mate } from "../types/mate";
 
 export const useCreateWeb3 = () => {
     const { connection } = useConnection()
     const wallet = useAnchorWallet();
     const { program } = useProgram({ connection, wallet });
 
-    const createProject = async ({ name, group, projectType, reserve, payments, currency, amount, startDate, endDate, client }) => {
+    const createProject = async (
+        { name, payments, amount }
+        ) => {
+
+        const ratio = 0
+        const common_expenses = new anchor.BN(0)
+        const currency = "SOL"
+        const milestones = 0;
+        const client = wallet.publicKey
+    
         const [pdaPublicKey] = web3.PublicKey.findProgramAddressSync(
-            [Buffer.from("project"), Buffer.from(name), Buffer.from(group)],
-            program.programId,
+          [Buffer.from("project"), Buffer.from(name), Buffer.from("")],
+          program.programId,
+        )
+    
+        const tx = await program.methods
+          .createProject(
+            name,
+            "",
+            "",
+            ratio,
+            payments,
+            common_expenses,
+            currency,
+            amount,
+            milestones,
+            new anchor.BN(Date.now()),
+            new anchor.BN(Date.now()),
+            client
           )
-        const tx = await program.rpc
-            .createProject(
-                name,
-                group,
-                projectType,
-                reserve,
-                payments,               
-                currency,
-                new anchor.BN(amount),
-                new anchor.BN(startDate),
-                new anchor.BN(endDate),
-                client,
-                {
-                    accounts: {
-                        project: pdaPublicKey,
-                        payer: wallet.publicKey,
-                        systemProgram: SystemProgram.programId,
-                    }
-                }
-            )
+          .accounts({
+            project: pdaPublicKey,
+            payer: wallet.publicKey,
+            systemProgram: web3.SystemProgram.programId,
+          })
+          .rpc()
+    
+          console.log(tx, `https://explorer.solana.com/tx/${tx}?cluster=devnet`)
+
+        // const storedProject = await program.account.project.fetch(pdaPublicKey)
+        // console.log(storedProject)
+    
+        // const tx = await program.methods
+        //     .createProject(
+        //         name,
+        //         "",
+        //         "",
+        //         0,
+        //         payments as unknown as Mate["types"][0]
+        //         ,
+        //         new anchor.BN(0),
+        //         "",
+        //         amount,
+        //         0,
+        //         new anchor.BN(Date.now()),
+        //         new anchor.BN(Date.now()),
+        //         ""
+        //     )
+        //     .accounts({
+        //         project: pdaPublicKey,
+        //         payer: wallet.publicKey,
+        //         systemProgram: web3.SystemProgram.programId,
+        //     })
+        //     .rpc()
 
         return {
-            tx,
+            // tx,
             keyProject: pdaPublicKey.toBase58(),
             keyTreasury: pdaPublicKey
         }
