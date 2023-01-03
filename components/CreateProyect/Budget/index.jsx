@@ -78,7 +78,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
             <div className="flex w-full items-center  ">
                 <div className="w-4/12 p-4">
                     <p className="text-lg text-gray-100 whitespace-nowrap ">* Project´s Total Budget</p>
-                    <p className="text-xs text-[#3BB89F] whitespace-nowrap">Invoice total amount without VAT</p>
+                    <p className="text-xs text-[#3BB89F] whitespace-nowrap">Invoice total amount without VAT and fill in all the fields to activate the button" por "Add a name to the project.</p>
                 </div>
                 <InputSelect
                     inputStyle={`flex w-8/12 appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
