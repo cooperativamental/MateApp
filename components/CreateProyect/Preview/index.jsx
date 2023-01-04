@@ -34,7 +34,6 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
             payments: members,
             amount: new BN(project.totalBruto)
         })
-        console.log(tx)
         handlePopUp({
             text:
                 <Link
@@ -54,7 +53,6 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
         })
 }
 const renderInfo = info => {
-    console.log(project)
     return (
         <div className="flex flex-col gap-4">
             {
