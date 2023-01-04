@@ -148,7 +148,7 @@ const CallProject = ({ keyProject }) => {
           }
         </div>
       </div>
-      <Link  href={`https://explorer.solana.com/tx/${txProject.signature}?cluster=devnet`}>
+      <Link  href={`https://explorer.solana.com/tx/${txProject?.signature}?cluster=devnet`}>
         <a target="blank" className="w-full break-all">https://explorer.solana.com/tx/{txProject?.signature}?cluster=devnet</a>
       </Link>
       <div className="flex w-full  justify-around">
