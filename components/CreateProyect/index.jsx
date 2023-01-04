@@ -6,9 +6,6 @@ import Budget from "./Budget"
 
 import { useWallet } from '@solana/wallet-adapter-react'
 
-import { useHost } from "../../context/host";
-import { sendEmail } from "../../functions/sendMail"
-import ComponentButton from "../Elements/ComponentButton";
 import Proposal from "./Proposal";
 import PreviewProject from "./Preview";
 import Agreement from "./Agreement";
@@ -21,6 +18,8 @@ const CreateProject = () => {
   const [errors, setErrors] = useState({})
   const [available, setAvailable] = useState(0)
   const [reserve, setReserve] = useState(0)
+
+
 
 
   const [confirmation, setConfirmation] = useState({
@@ -71,6 +70,7 @@ const CreateProject = () => {
     })
   }, [project.totalNeto, project.thirdParties, project.partners, project.ratio, project.members])
 
+  console.log(project)
 
   return (
     <div

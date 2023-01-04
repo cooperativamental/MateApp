@@ -75,13 +75,13 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
 
     return (
         <div className="flex flex-col w-8/12 items-center gap-3">
-            <div className="flex w-full items-center  ">
-                <div className="w-4/12 p-4">
-                    <p className="text-lg text-gray-100 whitespace-nowrap ">* Project´s Total Budget</p>
-                    <p className="text-xs text-[#3BB89F] whitespace-nowrap">Invoice total amount without VAT</p>
+            <div className="flex w-full items-center justify-between">
+                <div className="w-5/12 p-4">
+                    <p className="text-lg text-gray-100 whitespace-nowrap ">* Project´s Net Budget</p>
+                    <p className="text-xs text-[#3BB89F]">Invoice total amount without VAT and third parties costs. Only team´s budget.</p>
                 </div>
                 <InputSelect
-                    inputStyle={`flex w-8/12 appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
+                    inputStyle={`flex w-6/12 appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
                     value={!!project?.totalBruto && project?.totalBruto?.toString()}
                     type="number"
                     name="totalBruto"
@@ -91,7 +91,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                 />
             </div>
 
-            <div className="flex w-full items-center">
+            {/* <div className="flex w-full items-center">
                 <div className="w-4/12 p-4">
                     <p className="text-lg text-gray-100 whitespace-nowrap">Treasury rate</p>
                     <p className="text-xs text-[#3BB89F]">A slice of the project’s budget that will be assigned to your DAO.</p>
@@ -113,10 +113,10 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                         onChange={(e) => handleBudgetProject(e)}
                     />
                 </div>
-            </div>
+            </div> */}
 
 
-            <div className=" flex flex-row items-center w-full">
+            {/* <div className=" flex flex-row items-center w-full">
                 <div className="w-4/12 p-4">
                     <p className="text-sm text-gray-100 whitespace-nowrap ">* Third party's budget</p>
                     <p className="text-xs text-[#3BB89F]  ">Other Expenses and not member of the project's team.</p>
@@ -129,8 +129,8 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     type="number"
                     min={0}
                 />
-            </div>
-            <div className=" flex flex-row items-center w-full">
+            </div> */}
+            {/* <div className=" flex flex-row items-center w-full">
                 <div className="w-4/12 p-4">
                     <p className="text-sm text-gray-100 whitespace-nowrap  ">Project´s Net Budget</p>
                     <p className="text-xs text-[#3BB89F] ">Net budget is what’s left of the Total budget after treasury ratio and Thirds Parties are deducted</p>
@@ -143,7 +143,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     min={0}
                     disabled
                 />
-            </div>
+            </div> */}
 
             <ComponentButton
                 buttonEvent={handleConfirm}

@@ -9,7 +9,6 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useProgram } from "../../../hooks/useProgram/index.ts"
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
-import { TokenPocketWalletAdapter } from "@solana/wallet-adapter-wallets"
 
 const AssembleTeam = ({ project, setProject, confirmInfoProject, available, errors, confirmation }) => {
     const router = useRouter()
@@ -23,16 +22,14 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
     const { program } = useProgram({ connection, wallet });
 
     useEffect(() => {
-        const newArrayMembers = new Array(project.nMembers).fill(0)
-        const members = newArrayMembers.map((e, index) => {
+        const members = project.members.map((memb, index) => {
             if (index === 0) {
                 return {
-                    address: wallet?.publicKey?.toBase58()
+                    ...memb,
+                    address: wallet?.publicKey?.toBase58() || ""
                 }
             } else {
-                return {
-                    address: ""
-                }
+                return memb
             }
         })
         setProject({
@@ -46,12 +43,14 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
         const value = Number(e.target.value)
 
         if (e.target.name === "address") {
-            const statemembers = project.members.map((e, i) => {
+            const statemembers = project.members.map((memb, i) => {
                 if (index === i) {
                     return {
-                        ...e,
-                        address: value
+                        ...memb,
+                        address: e.target.value
                     }
+                } else {
+                    return memb
                 }
             })
 
@@ -61,15 +60,14 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             })
         }
         if (e.target.name === "percentage") {
-            const statemembers = project.members.map((e, i) => {
+            const statemembers = project.members.map((memb, i) => {
                 if (index === i) {
                     return {
-                        ...e,
-                        percentage: value,
+                        ...memb,
                         amount: (value * project.totalNeto) / 100
                     }
                 } else {
-                    return e
+                    return memb
                 }
             })
             setProject({
@@ -244,9 +242,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                                 :
                                                 <InputSelect
                                                     inputStyle="w-full !h-10 rounded-md"
-                                                    placeHolder={e.address}
+                                                    placeHolder={e?.address}
                                                     disabled={index === 0}
                                                     name="address"
+                                                    onChange={(e) => handlerMembers(e, index)}
                                                 />
 
                                         }

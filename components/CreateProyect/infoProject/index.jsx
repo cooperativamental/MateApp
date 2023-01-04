@@ -70,7 +70,7 @@ const InfoProject = ({ setProject, project, team, confirmInfoProject }) => {
         />
         {
           Object.keys(errors).length > 0 &&
-          <p className="flex flex-col items-center text-xs justify-center">Fill in all the fields to activate the button</p>
+          <p className="flex flex-col items-center text-xs justify-center">Add a name to the project.</p>
         }
       </div>
     </div >

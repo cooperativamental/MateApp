@@ -34,20 +34,47 @@ const PageHomeProjects = () => {
   )
   const [loading, setLoading] = useState(false)
   const [projects, setProjects] = useState([]);
+
   const [tabs, setTabs] = useState([
-    { name: 'Open', current: true, value: "HOSTING" },
-    { name: 'Closed', current: false, value: "INVITED" },
+    { name: 'Open', current: true, value: "OPEN" },
+    { name: 'Closed', current: false, value: "CLOSED" },
   ])
-  const [listProjects, setListProjects] = useState([]);
 
   useEffect(() => {
-    if(wallet){
-      fetch(`/api/solana/getAllProjectsByPubkey?pubkey=${wallet.publicKey.toBase58()}`)
-      .then(async (res)=>{
-        const projects = await res.json()
-      })
+    if (wallet) {
+      fetch(`/api/solana/getAllProjectsByMemberPubKey?pubkey=${wallet.publicKey.toBase58()}`)
+        .then(async (res) => {
+          const json = await res.json()
+          console.log(json)
+          const listProject = json?.projects?.map(prj => {
+            return {
+              ...prj.account,
+              publicKey: prj.publicKey,
+              redirect: () => router.push({
+                pathname: `projects/[id]`,
+                query: {
+                  id: prj.account.name
+                }
+              },
+              )
+            }
+          })
+          if (showProject !== "CLOSED") {
+            const open = listProject?.filter(prj => {
+              return prj.status !== "PAID"
+            })
+            setProjects(open)
+
+          } else {
+            const closed = listProject?.filter(prj =>
+              prj.status === "PAID"
+            )
+            setProjects(closed)
+          }
+        })
     }
-  }, [wallet])
+  }, [wallet, showProject])
+
 
   return (
     <div className="flex flex-col w-8/12 items-center gap-8">
@@ -56,7 +83,7 @@ const PageHomeProjects = () => {
         buttonText="Start a project"
         buttonEvent={() => router.push("/createproject")}
       />
-      <h3 className="text-2xl font-bold">Projects Contracts</h3>
+      <h3 className="text-2xl font-bold">A protocol to share ownership of a project. Try demo on Solana Devnet.</h3>
       <HeadBar
         event={(value) => {
           setShowProject(value)
@@ -72,7 +99,10 @@ const PageHomeProjects = () => {
         }}
         tabs={tabs}
       />
-      <Projects showModel={true} projects={listProjects} />
+
+      <Projects showModel={true} projects={projects} />
+
+
     </div>
   );
 };
