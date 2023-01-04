@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useHost } from "../../context/host";
+import Link from "next/link"
 import ComponentButton from "../Elements/ComponentButton";
 import InputSelect from "../Elements/InputSelect";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
@@ -12,14 +12,13 @@ import { SystemProgram, PublicKey } from "@solana/web3.js"
 import { useRouter } from "next/router";
 import { web3 } from "@project-serum/anchor";
 
+import { HostHook } from "../../hooks/useHost";
 
 const CallProject = ({ keyProject }) => {
   const router = useRouter()
+  const host = HostHook()
   const [project, setProject] = useState();
-  const { host } = useHost()
-  const [revision, setRevision] = useState(0)
-  const [wallets, setWallets] = useState()
-  const [selectWallet, setSelectWallet] = useState()
+  const [txProject, setTxProject] = useState()
 
   const { connection } = useConnection()
   const wallet = useAnchorWallet();
@@ -27,14 +26,25 @@ const CallProject = ({ keyProject }) => {
   // const [balance, setBalance] = useState()
 
   useEffect(() => {
-    if (program) {
+    if (program && keyProject) {
+      console.log(keyProject)
       fetch(`/api/solana/getProject?nameproject=${keyProject}`)
         .then(async res => {
           const json = await res.json()
           setProject(json.projects[0])
-        })
+        });
+
+      (async () => {
+        const [pdaPublicKey] = web3.PublicKey.findProgramAddressSync(
+          [Buffer.from("project"), Buffer.from(keyProject), Buffer.from("")],
+          program.programId,
+        )
+
+        const signature = await connection.getSignaturesForAddress(pdaPublicKey)
+        setTxProject(signature[0])
+      })()
     }
-  }, [program])
+  }, [program, keyProject])
 
   const signContract = async (membPubKey) => {
     const [pdaPublicKey] = web3.PublicKey.findProgramAddressSync(
@@ -51,6 +61,8 @@ const CallProject = ({ keyProject }) => {
     console.log(`https://explorer.solana.com/tx/${tx}?cluster=devnet`);
     router.reload()
   }
+
+
 
   return (
     <div className="flex flex-col gap-4 mt-12 w-8/12">
@@ -73,7 +85,7 @@ const CallProject = ({ keyProject }) => {
                     <div className="flex gap-4 items-center">
 
                       <p>
-                        {( memb.amount / Number(project.account.amount)) * 100}
+                        {(memb.amount / Number(project.account.amount)) * 100}
                       </p>
                       <div className="flex gap-2 items-center">
                         <p>
@@ -106,7 +118,7 @@ const CallProject = ({ keyProject }) => {
           }
         </div>
       }
-      <div >
+      <div className="mb-10">
         <h3>The Team:</h3>
         <div className="flex flex-col gap-4">
           {
@@ -120,7 +132,6 @@ const CallProject = ({ keyProject }) => {
                     </div>
                     <div
                       // onDoubleClick={(e) => {
-                      //   console.log(e)
                       //   navigator.clipboard.writeText(e.target.value)
                       // }}
                       className="flex text-base gap-2 w-4/12 overflow-ellipsis truncate"
@@ -137,7 +148,17 @@ const CallProject = ({ keyProject }) => {
           }
         </div>
       </div>
-
+      <Link  href={`https://explorer.solana.com/tx/${txProject.signature}?cluster=devnet`}>
+        <a target="blank" className="w-full break-all">https://explorer.solana.com/tx/{txProject?.signature}?cluster=devnet</a>
+      </Link>
+      <div className="flex w-full  justify-around">
+        <Link target="_blank" href={`https://twitter.com/messages/compose?text=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
+          <a target="blank" className="btn flex items-center justify-center">Twitter</a>
+        </Link>
+        <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
+          <a target="blank" className="btn flex items-center justify-center">EmailTo</a>
+        </Link>
+      </div>
     </div >
   );
 };

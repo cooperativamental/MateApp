@@ -5,7 +5,6 @@ import Link from "next/link"
 import ComponentButton from "../../Elements/ComponentButton";
 
 import { usePopUp } from "../../../context/PopUp";
-import { useHost } from "../../../context/host";
 import { useCreateWeb3 } from "../../../functions/createWeb3.ts"
 import { PublicKey } from "@solana/web3.js";
 import { BN } from "@project-serum/anchor";
@@ -14,7 +13,6 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const PreviewProject = ({ project, setProject, setConfirmation }) => {
 
-    const { host } = useHost()
     const router = useRouter()
     const { handlePopUp } = usePopUp()
     const { createProject } = useCreateWeb3()
