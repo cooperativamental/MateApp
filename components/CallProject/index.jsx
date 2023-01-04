@@ -67,7 +67,6 @@ const CallProject = ({ keyProject }) => {
           {
             project?.account?.members.map(memb => {
               if (memb.pubkey === wallet?.publicKey?.toBase58()) {
-                console.log(memb, project)
                 return (
                   <div className={`flex items-center text-black justify-between w-full py-1 px-6 rounded-md ${memb.status === "INVITED" ? "bg-[#FA9972]" : "bg-[#3BB89F]"}`}>
                     <p>You</p>

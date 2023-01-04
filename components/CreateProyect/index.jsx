@@ -58,7 +58,6 @@ const CreateProject = () => {
   useEffect(() => {
     let amountTotalPartners = 0
     project?.members && Object.values(project?.members).forEach(partner => {
-      console.log(partner)
       amountTotalPartners += (partner?.amount || 0)
     })
 
@@ -70,7 +69,6 @@ const CreateProject = () => {
     })
   }, [project.totalNeto, project.thirdParties, project.partners, project.ratio, project.members])
 
-  console.log(project)
 
   return (
     <div

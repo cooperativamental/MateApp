@@ -45,7 +45,6 @@ const PageHomeProjects = () => {
       fetch(`/api/solana/getAllProjectsByMemberPubKey?pubkey=${wallet.publicKey.toBase58()}`)
         .then(async (res) => {
           const json = await res.json()
-          console.log(json)
           const listProject = json?.projects?.map(prj => {
             return {
               ...prj.account,
