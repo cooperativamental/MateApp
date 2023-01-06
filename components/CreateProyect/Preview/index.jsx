@@ -112,7 +112,7 @@ return (
         }
         <div className="flex flex-col items-center gap-4 m-4 ">
 
-            <p className="text-base font-normal text-center">Send proposals to your partners. Be sure to have your Phantom Wallet on Devnet.</p>
+            <p className="text-base font-normal text-center">Send proposals to your partners. Be sure to have your Solana Wallet on Devnet.</p>
             <button
                 className="bg-none underline underline-offset-auto"
                 onClick={() => {

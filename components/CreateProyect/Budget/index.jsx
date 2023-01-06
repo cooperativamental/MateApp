@@ -80,15 +80,20 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     <p className="text-lg text-gray-100 whitespace-nowrap ">* Project´s Net Budget</p>
                     <p className="text-xs text-[#3BB89F]">Invoice total amount without VAT and third parties costs. Only team´s budget.</p>
                 </div>
-                <InputSelect
-                    inputStyle={`flex w-6/12 appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
-                    value={!!project?.totalBruto && project?.totalBruto?.toString()}
-                    type="number"
-                    name="totalBruto"
-                    onChange={(e) => handleBudgetProject(e)}
-                    min={0}
+                <div className="flex items-center w-6/12">
+                    <InputSelect
+                        inputStyle={`flex  appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
+                        value={!!project?.totalBruto && project?.totalBruto?.toString()}
+                        type="number"
+                        name="totalBruto"
+                        onChange={(e) => handleBudgetProject(e)}
+                        min={0}
 
-                />
+                    />
+                    <p>
+                        ◎ SOL
+                    </p>
+                </div>
             </div>
 
             {/* <div className="flex w-full items-center">

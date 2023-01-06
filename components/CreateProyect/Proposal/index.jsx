@@ -39,7 +39,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
 
     }, [wallet])
 
-    
+
     const handleNmember = (num) => {
         const newArrayMembers = new Array(num).fill({})
         console.log(newArrayMembers)
@@ -246,7 +246,9 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                             inputStyle="w-full !h-10 rounded-md"
                                             value={e?.amount}
                                         />
-                                        <p className="text-xl font-thin">$</p>
+                                        <p>
+                                            ◎ SOL
+                                        </p>
                                     </div>
                                     <div className="w-6/12">
                                         {
