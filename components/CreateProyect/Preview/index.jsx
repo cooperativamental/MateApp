@@ -5,7 +5,6 @@ import Link from "next/link"
 import ComponentButton from "../../Elements/ComponentButton";
 
 import { usePopUp } from "../../../context/PopUp";
-import { useHost } from "../../../context/host";
 import { useCreateWeb3 } from "../../../functions/createWeb3.ts"
 import { PublicKey } from "@solana/web3.js";
 import { BN } from "@project-serum/anchor";
@@ -14,7 +13,6 @@ import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const PreviewProject = ({ project, setProject, setConfirmation }) => {
 
-    const { host } = useHost()
     const router = useRouter()
     const { handlePopUp } = usePopUp()
     const { createProject } = useCreateWeb3()
@@ -114,7 +112,7 @@ return (
         }
         <div className="flex flex-col items-center gap-4 m-4 ">
 
-            <p className="text-base font-normal text-center">Send proposals to your partners. Be sure to have your Phantom Wallet on Devnet.</p>
+            <p className="text-base font-normal text-center">Send proposals to your partners. Be sure to have your Solana Wallet on Devnet.</p>
             <button
                 className="bg-none underline underline-offset-auto"
                 onClick={() => {

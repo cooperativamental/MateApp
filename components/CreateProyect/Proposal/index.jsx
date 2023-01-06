@@ -39,6 +39,32 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
 
     }, [wallet])
 
+
+    const handleNmember = (num) => {
+        const newArrayMembers = new Array(num).fill({})
+        console.log(newArrayMembers)
+        const members = newArrayMembers.map((memb, index) => {
+            console.log(index)
+            if (index === 0) {
+                return {
+                    address: wallet?.publicKey?.toBase58()
+                }
+            } else if (!memb.address) {
+                return {
+                    address: ""
+                }
+            } else {
+                return memb
+            }
+        })
+        console.log(members)
+        setProject({
+            ...project,
+            members: members,
+            availableTeam: available
+        })
+    }
+
     const handlerMembers = (e, index) => {
         const value = Number(e.target.value)
 
@@ -93,122 +119,109 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
 
     return (
         <div className="flex flex-col text-center gap-8 items-center w-8/12" >
-            <div className="flex w-full justify-between">
-                <p>Available</p>
-                <p className="text-xl">{available}</p>
+            <div className="flex w-full justify-between items-center text-lg">
+                <p>Available Budget (1)</p>
+                <div className="flex items-center gap-4">
+                    <InputSelect
+                        disabled
+                        value={available}
+                        inputStyle="text-center"
+                    />
+                    <div>
+                        <p className="text-2xl">◎ SOL</p>
+                    </div>
+                </div>
             </div>
-            <div className="w-full overflow-hidden rounded-md">
+            <div className="flex w-full items-center">
+                <div className="w-4/12 p-1">
+                    <p className="text-lg text-gray-100 whitespace-nowrap">Members (n)</p>
+                    <p className="text-xs text-[#3BB89F]">
+                        How many partners are involved in the project.
+                    </p>
+                </div>
+                <div className="w-full overflow-hidden rounded-md">
 
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 1
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    1
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 2
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    2
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 3
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    3
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 4
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    4
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 5
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    5
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 6
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    6
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 7
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${project?.members?.length === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    7
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 8
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${project?.members?.length === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    8
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 9
-                        })
-                    }}
-                    className={`relative  w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${project?.members?.length === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    9
-                </button>
-                <button
-                    onClick={() => {
-                        setProject({
-                            ...project,
-                            nMembers: 10
-                        })
-                    }}
-                    className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                >
-                    10
-                </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(1)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        1
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(2)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        2
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(3)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        3
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(4)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        4
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(5)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        5
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(6)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        6
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(7)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        7
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(8)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        8
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(9)
+                        }}
+                        className={`relative  w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        9
+                    </button>
+                    <button
+                        onClick={() => {
+                            handleNmember(10)
+                        }}
+                        className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                    >
+                        10
+                    </button>
+                </div>
             </div>
             <div className="flex flex-col w-full gap-4">
                 {
@@ -233,7 +246,9 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                             inputStyle="w-full !h-10 rounded-md"
                                             value={e?.amount}
                                         />
-                                        <p className="text-xl font-thin">$</p>
+                                        <p>
+                                            ◎ SOL
+                                        </p>
                                     </div>
                                     <div className="w-6/12">
                                         {
