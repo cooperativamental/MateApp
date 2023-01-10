@@ -1,25 +1,17 @@
 import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
-
 
 import ComponentButton from "../../Elements/ComponentButton"
 import InputSelect from "../../Elements/InputSelect"
+import ToogleSwitch from "../../Elements/ToggleSwitch"
 
-import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
-import { useProgram } from "../../../hooks/useProgram/index.ts"
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
 
 const AssembleTeam = ({ project, setProject, confirmInfoProject, available, errors, confirmation }) => {
-    const router = useRouter()
-
-    const [assembleTeam, setAssembleTeam] = useState()
     const [nMembers, setNmembers] = useState([])
     const [selectPartners, setSelectPartners] = useState()
-
-    const { connection } = useConnection()
+    const [priorityMember, setPriorityMember] = useState(null)
     const wallet = useAnchorWallet();
-    const { program } = useProgram({ connection, wallet });
 
     useEffect(() => {
         const members = project.members.map((memb, index) => {
@@ -39,19 +31,34 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
 
     }, [wallet])
 
+    useEffect(() => {
+        if (priorityMember) {
+            if (project.agreement === "FIRST_MINORITY") {
+                const members = project.members.map((memb, index) => {
+                    if (index === priorityMember) {
+                        return {
+                            ...memb,
+                            amount: 0
+                        }
+                    } else {
+                        return memb
+                    }
+                })
+            }
+        }
+    }, [priorityMember])
 
     const handleNmember = (num) => {
         const newArrayMembers = new Array(num).fill({})
         console.log(newArrayMembers)
         const members = newArrayMembers.map((memb, index) => {
-            console.log(index)
             if (index === 0) {
                 return {
                     address: wallet?.publicKey?.toBase58()
                 }
-            } else if (!memb.address) {
+            } else if (project?.members[index]) {
                 return {
-                    address: ""
+                    ...project?.members[index]
                 }
             } else {
                 return memb
@@ -112,6 +119,8 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             members: resInfoPartners
         })
     }
+
+
 
     const handleConfirm = () => {
         confirmInfoProject("PROPOSAL", true)
@@ -241,7 +250,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                         />
                                         <p>%</p>
                                     </div>
-                                    <div className="w-3/12">
+                                    <div className="flex flex-col w-3/12 gap-2 items-center">
                                         <InputSelect
                                             inputStyle="w-full !h-10 rounded-md"
                                             value={e?.amount}
@@ -250,7 +259,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                             ◎ SOL
                                         </p>
                                     </div>
-                                    <div className="w-6/12">
+                                    <div className="flex flex-col w-6/12 gap-2 items-center">
                                         {
                                             !wallet && index === 0 ?
                                                 <WalletMultiButton className='!h-10 !w-max !bg-[#FA9972] hover:!bg-slate-700 !rounded-md !font-thin' />
@@ -265,6 +274,17 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
 
                                         }
                                         <p className="text-xs font-thin">Member Wallet</p>
+                                    </div>
+                                    <div className="flex items-center h-10">
+                                        {
+                                            (project.agreement === "FIRTS_MINORITY" || project.agreement === "COACH_MODE") &&
+                                            <ToogleSwitch
+                                                enabled={priorityMember === index}
+                                                onChange={() => {
+                                                    setPriorityMember(index)
+                                                }}
+                                            />
+                                        }
                                     </div>
                                 </div>
                             </div>
