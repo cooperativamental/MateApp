@@ -30,11 +30,13 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
         setProject({
             ...project,
             members: members,
-            agreement: agreement,
+            typeAgreement: agreement,
             availableTeam: available
         })
         confirmInfoProject("AGREEMENT", true)
     }
+
+    console.log(project)
 
     return (
         <div className="flex flex-col items-center w-8/12 p-4 gap-8">
@@ -173,7 +175,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                 </p>
                 <div className="flex gap-4">
                     <p className="text-xs text-[#3BB89F]">
-                        x = available budget (1) - reserve (2)
+                        x = available budget (1)
                     </p>
                     <p className="text-xs text-[#3BB89F]">
                         n = number of members
@@ -205,7 +207,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                             </p>
                             <p>
                                 Rest members receive
-                                amount = (x - (x / n-1)) / n-1
+                                amount = (x - (x / (n-1))) / n-1
                             </p>
                         </div>
                         <ComponentButton

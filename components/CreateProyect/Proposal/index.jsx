@@ -32,21 +32,55 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
     }, [wallet])
 
     useEffect(() => {
-        if (priorityMember) {
-            if (project.agreement === "FIRST_MINORITY") {
+        if (priorityMember !== null) {
+            if (project.typeAgreement === "FIRST_MINORITY") {
                 const members = project.members.map((memb, index) => {
                     if (index === priorityMember) {
                         return {
                             ...memb,
-                            amount: 0
+                            amount: project.totalNeto / project.members.length - 1,
+                            percentage: ((project.totalNeto / project.members.length - 1) * 100) / project.totalNeto
                         }
                     } else {
-                        return memb
+                        return {
+                            ...memb,
+                            amount: (project.totalNeto - (project.totalNeto / project.members.length - 1)) / project.members.length - 1,
+                            percentage: (((project.totalNeto - (project.totalNeto / project.members.length - 1)) / project.members.length - 1) * 100) / project.totalNeto
+                        }
                     }
+                })
+                setProject({
+                    ...project,
+                    members
+                })
+            }
+            if (project.typeAgreement === "COACH_MODE") {
+                const members = project.members.map((memb, index) => {
+                    const amountCM = (project.totalNeto - (project.totalNeto / (project.members.length-1))) / project.members.length
+                    if (index === priorityMember) {
+                        return {
+                            ...memb,
+                            amount: amountCM,
+                            percentage: (amountCM * 100) / project.totalNeto
+                        }
+                    } else {
+                        console.log((((project.totalNeto - amountCM) / (project.members.length - 1)) * 100) / project.totalNeto )
+                        console.log((project.totalNeto - amountCM) / (project.members.length - 1))
+                        return {
+                            ...memb,
+                            amount: (project.totalNeto - amountCM) / (project.members.length - 1),
+                            percentage: (((project.totalNeto - amountCM) / (project.members.length - 1)) * 100) / project.totalNeto 
+                        }
+                    }
+                })
+                setProject({
+                    ...project,
+                    members
                 })
             }
         }
     }, [priorityMember])
+
 
     const handleNmember = (num) => {
         const newArrayMembers = new Array(num).fill({})
@@ -54,17 +88,22 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
         const members = newArrayMembers.map((memb, index) => {
             if (index === 0) {
                 return {
-                    address: wallet?.publicKey?.toBase58()
+                    address: wallet?.publicKey?.toBase58(),
+                    amount: 0
                 }
             } else if (project?.members[index]) {
                 return {
-                    ...project?.members[index]
+                    ...project?.members[index],
+                    amount: 0
                 }
             } else {
-                return memb
+                return {
+                    ...memb,
+                    amount: 0
+                }
             }
         })
-        console.log(members)
+        setPriorityMember(null)
         setProject({
             ...project,
             members: members,
@@ -97,7 +136,8 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                 if (index === i) {
                     return {
                         ...memb,
-                        amount: (value * project.totalNeto) / 100
+                        amount: (value * project.totalNeto) / 100,
+                        percentage: value
                     }
                 } else {
                     return memb
@@ -105,7 +145,8 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             })
             setProject({
                 ...project,
-                members: statemembers
+                members: statemembers,
+                typeAgreement: "OTHER"
             })
         }
     }
@@ -125,6 +166,9 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
     const handleConfirm = () => {
         confirmInfoProject("PROPOSAL", true)
     }
+
+
+    console.log(priorityMember)
 
     return (
         <div className="flex flex-col text-center gap-8 items-center w-8/12" >
@@ -244,6 +288,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                     <div className="flex h-min items-center w-2/12">
                                         <InputSelect
                                             type="number"
+                                            value={e?.percentage?.toString()}
                                             inputStyle="w-full !h-10 rounded-md"
                                             name="percentage"
                                             onChange={(e) => handlerMembers(e, index)}
@@ -277,7 +322,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                     </div>
                                     <div className="flex items-center h-10">
                                         {
-                                            (project.agreement === "FIRTS_MINORITY" || project.agreement === "COACH_MODE") &&
+                                            (project.typeAgreement === "FIRST_MINORITY" || project.typeAgreement === "COACH_MODE") &&
                                             <ToogleSwitch
                                                 enabled={priorityMember === index}
                                                 onChange={() => {
