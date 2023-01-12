@@ -38,14 +38,14 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                     if (index === priorityMember) {
                         return {
                             ...memb,
-                            amount: project.totalNeto / project.members.length - 1,
-                            percentage: ((project.totalNeto / project.members.length - 1) * 100) / project.totalNeto
+                            amount: project.totalNeto / (project.members.length - 1),
+                            percentage: ((project.totalNeto / (project.members.length - 1)) * 100) / project.totalNeto
                         }
                     } else {
                         return {
                             ...memb,
-                            amount: (project.totalNeto - (project.totalNeto / project.members.length - 1)) / project.members.length - 1,
-                            percentage: (((project.totalNeto - (project.totalNeto / project.members.length - 1)) / project.members.length - 1) * 100) / project.totalNeto
+                            amount: (project.totalNeto - (project.totalNeto / (project.members.length - 1))) / (project.members.length - 1),
+                            percentage: (((project.totalNeto - (project.totalNeto / (project.members.length - 1))) / (project.members.length - 1)) * 100) / project.totalNeto
                         }
                     }
                 })
@@ -64,8 +64,6 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                             percentage: (amountCM * 100) / project.totalNeto
                         }
                     } else {
-                        console.log((((project.totalNeto - amountCM) / (project.members.length - 1)) * 100) / project.totalNeto )
-                        console.log((project.totalNeto - amountCM) / (project.members.length - 1))
                         return {
                             ...memb,
                             amount: (project.totalNeto - amountCM) / (project.members.length - 1),
@@ -84,7 +82,6 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
 
     const handleNmember = (num) => {
         const newArrayMembers = new Array(num).fill({})
-        console.log(newArrayMembers)
         const members = newArrayMembers.map((memb, index) => {
             if (index === 0) {
                 return {
@@ -166,9 +163,6 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
     const handleConfirm = () => {
         confirmInfoProject("PROPOSAL", true)
     }
-
-
-    console.log(priorityMember)
 
     return (
         <div className="flex flex-col text-center gap-8 items-center w-8/12" >

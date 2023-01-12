@@ -27,7 +27,6 @@ const CallProject = ({ keyProject }) => {
 
   useEffect(() => {
     if (program && keyProject) {
-      console.log(keyProject)
       fetch(`/api/solana/getProject?nameproject=${keyProject}`)
         .then(async res => {
           const json = await res.json()

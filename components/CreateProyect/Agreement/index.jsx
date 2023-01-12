@@ -36,8 +36,6 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
         confirmInfoProject("AGREEMENT", true)
     }
 
-    console.log(project)
-
     return (
         <div className="flex flex-col items-center w-8/12 p-4 gap-8">
             <div className="flex w-full justify-between items-center text-lg">
@@ -203,11 +201,11 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                     <div className="flex flex-col pb-4 items-center bg-[#1A1735] rounded-md gap-4">
                         <div className="h-4/5 p-4" >
                             <p>
-                                One member receive amountFM  = x / n - 1
+                                One member receive amountFM  = x / (n - 1)
                             </p>
                             <p>
                                 Rest members receive
-                                amount = (x - (x / (n-1))) / n-1
+                                amount = (x - (x / (n-1))) / (n - 1)
                             </p>
                         </div>
                         <ComponentButton
@@ -225,7 +223,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                             </p>
                             <p>
                                 Rest members receive
-                                amount = (x - amountCM) / n - 1
+                                amount = (x - amountCM) / (n - 1)
                             </p>
                         </div>
                         <ComponentButton
