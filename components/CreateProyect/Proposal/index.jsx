@@ -219,12 +219,12 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         How many partners are involved in the project.
                     </p>
                 </div>
-                <div className="w-[18rem] overflow-hidden rounded-md">
+                <div className="w-[22.5rem] overflow-hidden rounded-md">
                     <button
                         onClick={() => {
                             handleNmember(2)
                         }}
-                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         2
                     </button>
@@ -232,7 +232,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         onClick={() => {
                             handleNmember(3)
                         }}
-                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         3
                     </button>
@@ -240,7 +240,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         onClick={() => {
                             handleNmember(4)
                         }}
-                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         4
                     </button>
@@ -248,7 +248,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         onClick={() => {
                             handleNmember(5)
                         }}
-                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         5
                     </button>
@@ -256,7 +256,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         onClick={() => {
                             handleNmember(6)
                         }}
-                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         6
                     </button>
@@ -264,7 +264,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         onClick={() => {
                             handleNmember(7)
                         }}
-                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         7
                     </button>
@@ -272,7 +272,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         onClick={() => {
                             handleNmember(8)
                         }}
-                        className={`relative w-[2rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         8
                     </button>
@@ -280,7 +280,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         onClick={() => {
                             handleNmember(9)
                         }}
-                        className={`relative  w-[2rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative  w-[2.5rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         9
                     </button>
@@ -288,7 +288,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         onClick={() => {
                             handleNmember(10)
                         }}
-                        className={`relative w-[2rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         10
                     </button>

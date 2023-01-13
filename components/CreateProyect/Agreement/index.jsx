@@ -98,12 +98,12 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         How many partners are involved in the project.
                     </p>
                 </div>
-                <div className="w-full overflow-hidden rounded-md">
+                <div className="w-[22.5rem] overflow-hidden rounded-md">
                     <button
                         onClick={() => {
                             setNmembers(2)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         2
                     </button>
@@ -111,7 +111,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         onClick={() => {
                             setNmembers(3)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         3
                     </button>
@@ -119,7 +119,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         onClick={() => {
                             setNmembers(4)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         4
                     </button>
@@ -127,7 +127,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         onClick={() => {
                             setNmembers(5)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         5
                     </button>
@@ -135,7 +135,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         onClick={() => {
                             setNmembers(6)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         6
                     </button>
@@ -143,7 +143,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         onClick={() => {
                             setNmembers(7)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         7
                     </button>
@@ -151,7 +151,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         onClick={() => {
                             setNmembers(8)
                         }}
-                        className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         8
                     </button>
@@ -159,7 +159,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         onClick={() => {
                             setNmembers(9)
                         }}
-                        className={`relative  w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative  w-[2.5rem] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         9
                     </button>
@@ -167,7 +167,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         onClick={() => {
                             setNmembers(10)
                         }}
-                        className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2.5rem] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         10
                     </button>
