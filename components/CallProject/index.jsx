@@ -30,8 +30,6 @@ const CallProject = ({ keyProject }) => {
       const interval = setInterval(async () => {
         const res = await fetch(`/api/solana/getProject?nameproject=${keyProject}`)
         const json = await res.json()
-        if (json || project) clearInterval(interval)
-        console.log("!")
         setProject(json.projects[0])
       }, 1000);
 
