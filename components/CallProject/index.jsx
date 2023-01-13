@@ -33,8 +33,6 @@ const CallProject = ({ keyProject }) => {
         setProject(json.projects[0])
       }, 1000);
 
-
-
       (async () => {
         const [pdaPublicKey] = web3.PublicKey.findProgramAddressSync(
           [Buffer.from("project"), Buffer.from(keyProject), Buffer.from("")],
@@ -44,10 +42,6 @@ const CallProject = ({ keyProject }) => {
         const signature = await connection.getSignaturesForAddress(pdaPublicKey)
         setTxProject(signature[0])
       })()
-
-      if (project) {
-
-      }
     }
   }, [program, keyProject])
 
