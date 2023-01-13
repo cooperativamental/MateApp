@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useConnection } from "@solana/wallet-adapter-react"
 import { useProgram } from "../hooks/useProgram/index.ts"
+import { usePopUp } from "../context/PopUp";
 
 import Projects from "../components/Projects";
 import HeadBar from "../components/Elements/HeadTab"
@@ -12,6 +13,8 @@ import ComponentButton from "../components/Elements/ComponentButton";
 import { Processor } from "postcss";
 
 const PageHomeProjects = () => {
+  const { handlePopUp } = usePopUp()
+
   const router = useRouter()
 
   const { connection } = useConnection()

@@ -15,15 +15,32 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
     }, [project.reserve])
 
     const handleConfirm = (agreement) => {
+
         const newArrayMembers = new Array(nMembers).fill({})
         const members = newArrayMembers.map((memb, index) => {
             if (index === 0) {
                 return {
-                    address: wallet?.publicKey?.toBase58()
+                    address: wallet?.publicKey?.toBase58(),
+                    amount: agreement === "EQUAL_PARTS" ?
+                        project.totalNeto / nMembers
+                        :
+                        0,
+                    percentage: agreement === "EQUAL_PARTS" ?
+                        100 / nMembers
+                        :
+                        0,
                 }
             } else if (!memb.address) {
                 return {
-                    address: ""
+                    address: "",
+                    amount: agreement === "EQUAL_PARTS" ?
+                        project.totalNeto / nMembers
+                        :
+                        0,
+                    percentage: agreement === "EQUAL_PARTS" ?
+                        100 / nMembers
+                        :
+                        0,
                 }
             }
         })
@@ -82,15 +99,6 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                     </p>
                 </div>
                 <div className="w-full overflow-hidden rounded-md">
-
-                    <button
-                        onClick={() => {
-                            setNmembers(1)
-                        }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                    >
-                        1
-                    </button>
                     <button
                         onClick={() => {
                             setNmembers(2)
@@ -196,6 +204,8 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                             buttonEvent={() => {
                                 handleConfirm("EQUAL_PARTS")
                             }}
+                            conditionDisabled={!nMembers}
+
                         />
                     </div>
                     <div className="flex flex-col pb-4 items-center bg-[#1A1735] rounded-md gap-4">
@@ -214,6 +224,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                             buttonEvent={() => {
                                 handleConfirm("FIRST_MINORITY")
                             }}
+                            conditionDisabled={nMembers < 3 || !nMembers}
                         />
                     </div>
                     <div className="flex flex-col pb-4 items-center bg-[#1A1735] rounded-md gap-4">
@@ -232,6 +243,8 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                             buttonEvent={() => {
                                 handleConfirm("COACH_MODE")
                             }}
+                            conditionDisabled={nMembers < 3 || !nMembers}
+
                         />
                     </div>
                     <div className="flex flex-col pb-4 items-center bg-[#1A1735] rounded-md gap-4">
@@ -243,6 +256,10 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         <ComponentButton
                             buttonStyle="w-min !max-w-full text-xs"
                             buttonText="Other"
+                            conditionDisabled={!nMembers}
+                            buttonEvent={() => {
+                                handleConfirm("OTHER")
+                            }}
                         />
                     </div>
                 </div>

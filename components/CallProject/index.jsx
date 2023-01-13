@@ -27,11 +27,15 @@ const CallProject = ({ keyProject }) => {
 
   useEffect(() => {
     if (program && keyProject) {
-      fetch(`/api/solana/getProject?nameproject=${keyProject}`)
-        .then(async res => {
-          const json = await res.json()
-          setProject(json.projects[0])
-        });
+      const interval = setInterval(async () => {
+        const res = await fetch(`/api/solana/getProject?nameproject=${keyProject}`)
+        const json = await res.json()
+        if (json || project) clearInterval(interval)
+        console.log("!")
+        setProject(json.projects[0])
+      }, 1000);
+
+
 
       (async () => {
         const [pdaPublicKey] = web3.PublicKey.findProgramAddressSync(
@@ -42,6 +46,10 @@ const CallProject = ({ keyProject }) => {
         const signature = await connection.getSignaturesForAddress(pdaPublicKey)
         setTxProject(signature[0])
       })()
+
+      if (project) {
+
+      }
     }
   }, [program, keyProject])
 
@@ -147,7 +155,7 @@ const CallProject = ({ keyProject }) => {
           }
         </div>
       </div>
-      <Link  href={`https://explorer.solana.com/tx/${txProject?.signature}?cluster=devnet`}>
+      <Link href={`https://explorer.solana.com/tx/${txProject?.signature}?cluster=devnet`}>
         <a target="blank" className="w-full break-all">https://explorer.solana.com/tx/{txProject?.signature}?cluster=devnet</a>
       </Link>
       <div className="flex w-full  justify-around">

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/router";
 
 import Navbar from "./Navbar";
-import PopUp from "../PopUp"
 
 import { useConnection, useWallet } from '@solana/wallet-adapter-react'
 

@@ -7,11 +7,18 @@ import ToogleSwitch from "../../Elements/ToggleSwitch"
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui"
 
-const AssembleTeam = ({ project, setProject, confirmInfoProject, available, errors, confirmation }) => {
-    const [nMembers, setNmembers] = useState([])
+const AssembleTeam = ({ project, setProject, confirmInfoProject, available, confirmation }) => {
     const [selectPartners, setSelectPartners] = useState()
     const [priorityMember, setPriorityMember] = useState(null)
+    const [errors, setErrors] = useState({})
     const wallet = useAnchorWallet();
+    useEffect(() => {
+        console.log(project.members, project.totalNeto)
+        setErrors({
+            available: available !== 0,
+            members: project.members.find(memb => memb.amount === 0 || !memb.address)
+        })
+    }, [project, available])
 
     useEffect(() => {
         const members = project.members.map((memb, index) => {
@@ -56,7 +63,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             }
             if (project.typeAgreement === "COACH_MODE") {
                 const members = project.members.map((memb, index) => {
-                    const amountCM = (project.totalNeto - (project.totalNeto / (project.members.length-1))) / project.members.length
+                    const amountCM = (project.totalNeto - (project.totalNeto / (project.members.length - 1))) / project.members.length
                     if (index === priorityMember) {
                         return {
                             ...memb,
@@ -67,7 +74,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         return {
                             ...memb,
                             amount: (project.totalNeto - amountCM) / (project.members.length - 1),
-                            percentage: (((project.totalNeto - amountCM) / (project.members.length - 1)) * 100) / project.totalNeto 
+                            percentage: (((project.totalNeto - amountCM) / (project.members.length - 1)) * 100) / project.totalNeto
                         }
                     }
                 })
@@ -83,20 +90,36 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
     const handleNmember = (num) => {
         const newArrayMembers = new Array(num).fill({})
         const members = newArrayMembers.map((memb, index) => {
+
             if (index === 0) {
                 return {
                     address: wallet?.publicKey?.toBase58(),
-                    amount: 0
+                    amount: project.typeAgreement === "EQUAL_PARTS" ?
+                        project.totalNeto / num :
+                        0,
+                    percentage: project.typeAgreement === "EQUAL_PARTS" ?
+                        100 / num :
+                        0,
                 }
             } else if (project?.members[index]) {
                 return {
                     ...project?.members[index],
-                    amount: 0
+                    amount: project.typeAgreement === "EQUAL_PARTS" ?
+                        project.totalNeto / num :
+                        0,
+                    percentage: project.typeAgreement === "EQUAL_PARTS" ?
+                        100 / num :
+                        0,
                 }
             } else {
                 return {
                     ...memb,
-                    amount: 0
+                    amount: project.typeAgreement === "EQUAL_PARTS" ?
+                        project.totalNeto / num :
+                        0,
+                    percentage: project.typeAgreement === "EQUAL_PARTS" ?
+                        100 / num :
+                        0,
                 }
             }
         })
@@ -164,8 +187,14 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
         confirmInfoProject("PROPOSAL", true)
     }
 
+
     return (
-        <div className="flex flex-col text-center gap-8 items-center w-8/12" >
+        <div className="relative flex flex-col text-center gap-8 items-center w-8/12" >
+            <ComponentButton
+                isBack
+                buttonStyle="absolute -left-20"
+                buttonEvent={() => confirmInfoProject("AGREEMENT", false)}
+            />
             <div className="flex w-full justify-between items-center text-lg">
                 <p>Available Budget (1)</p>
                 <div className="flex items-center gap-4">
@@ -179,6 +208,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                     </div>
                 </div>
             </div>
+            <div className="flex w-full justify-between items-center text-lg">
+                <p>Strategy</p>
+                <p>{project.typeAgreement}</p>
+            </div>
             <div className="flex w-full items-center">
                 <div className="w-4/12 p-1">
                     <p className="text-lg text-gray-100 whitespace-nowrap">Members (n)</p>
@@ -186,21 +219,12 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         How many partners are involved in the project.
                     </p>
                 </div>
-                <div className="w-full overflow-hidden rounded-md">
-
-                    <button
-                        onClick={() => {
-                            handleNmember(1)
-                        }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 1 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
-                    >
-                        1
-                    </button>
+                <div className="w-[18rem] overflow-hidden rounded-md">
                     <button
                         onClick={() => {
                             handleNmember(2)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 2 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         2
                     </button>
@@ -208,7 +232,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         onClick={() => {
                             handleNmember(3)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 3 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         3
                     </button>
@@ -216,7 +240,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         onClick={() => {
                             handleNmember(4)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 4 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         4
                     </button>
@@ -224,7 +248,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         onClick={() => {
                             handleNmember(5)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 5 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         5
                     </button>
@@ -232,7 +256,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         onClick={() => {
                             handleNmember(6)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 6 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         6
                     </button>
@@ -240,7 +264,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         onClick={() => {
                             handleNmember(7)
                         }}
-                        className={`relative w-[10%] h-12 items-center border text-sm font-medium focus:z-20 ${nMembers === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2rem] h-12 items-center border text-sm font-medium focus:z-20 ${project.members.length === 7 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         7
                     </button>
@@ -248,7 +272,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         onClick={() => {
                             handleNmember(8)
                         }}
-                        className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 8 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         8
                     </button>
@@ -256,7 +280,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         onClick={() => {
                             handleNmember(9)
                         }}
-                        className={`relative  w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative  w-[2rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 9 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         9
                     </button>
@@ -264,7 +288,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                         onClick={() => {
                             handleNmember(10)
                         }}
-                        className={`relative w-[10%] h-12 items-center border  text-sm font-medium focus:z-20 ${nMembers === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
+                        className={`relative w-[2rem] h-12 items-center border  text-sm font-medium focus:z-20 ${project.members.length === 10 ? "border-indigo-500 text-indigo-600 bg-indigo-50" : "border-gray-300 text-gray-500 bg-white hover:bg-gray-50"}`}
                     >
                         10
                     </button>
@@ -292,7 +316,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
                                     <div className="flex flex-col w-3/12 gap-2 items-center">
                                         <InputSelect
                                             inputStyle="w-full !h-10 rounded-md"
-                                            value={e?.amount}
+                                            value={e?.amount?.toString()}
                                         />
                                         <p>
                                             ◎ SOL
@@ -335,8 +359,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, erro
             <ComponentButton
                 buttonEvent={handleConfirm}
                 buttonText="View Proposal"
-                buttonStyle={`h-14 ${(!!Object.values(errors).find(error => !!error)) ? "bg-[grey]" : "bg-[#5A31E1]"}`}
-                conditionDisabled={errors.members}
+                conditionDisabled={Object.values(errors).find(error => !!error)}
             />
         </div >
 

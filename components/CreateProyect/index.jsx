@@ -69,6 +69,7 @@ const CreateProject = () => {
     })
   }, [project.totalNeto, project.thirdParties, project.partners, project.ratio, project.members])
 
+  console.log(confirmation)
 
   return (
     <div
