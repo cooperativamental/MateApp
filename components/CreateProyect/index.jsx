@@ -8,6 +8,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 
 import Proposal from "./Proposal";
 import PreviewProject from "./Preview";
+import Agreement from "./Agreement";
 
 
 const CreateProject = () => {
@@ -17,6 +18,9 @@ const CreateProject = () => {
   const [errors, setErrors] = useState({})
   const [available, setAvailable] = useState(0)
   const [reserve, setReserve] = useState(0)
+
+
+
 
   const [confirmation, setConfirmation] = useState({
     INFO_PROJECT: false,
@@ -65,6 +69,7 @@ const CreateProject = () => {
     })
   }, [project.totalNeto, project.thirdParties, project.partners, project.ratio, project.members])
 
+  console.log(confirmation)
 
   return (
     <div
@@ -124,7 +129,7 @@ const CreateProject = () => {
           errors={errors}
         />
       }
-      {/* {
+      {
         (confirmation.INFO_PROJECT && confirmation.BUDGET && !confirmation.AGREEMENT) &&
         <Agreement
           available={available}
@@ -135,9 +140,9 @@ const CreateProject = () => {
           setProject={setProject}
           project={project}
         />
-      } */}
+      }
       {
-        (confirmation.INFO_PROJECT && confirmation.BUDGET &&  !confirmation.PROPOSAL) &&
+        (confirmation.INFO_PROJECT && confirmation.BUDGET && confirmation.AGREEMENT && !confirmation.PROPOSAL) &&
         <Proposal
           available={available}
           errors={errors}

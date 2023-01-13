@@ -10,12 +10,12 @@ const MyApp = ({ Component, pageProps }) => {
   return (
 
     <WalletContextProvider>
-        <PopUpProvider>
-          <Layout>
-            <Component {...pageProps} />
-            <Analytics />
-          </Layout>
-        </PopUpProvider>
+      <PopUpProvider>
+        <Layout>
+          <Component {...pageProps} />
+          <Analytics />
+        </Layout>
+      </PopUpProvider>
     </WalletContextProvider>
   )
 
