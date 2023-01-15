@@ -22,18 +22,18 @@ export default function CardList({ list, noResults }) {
                                 <li
                                     onClick={() => item.redirect()}
                                     key={item.id}
-                                    className="flex justify-between p-4 border-2 border-[#6221E8] rounded-md hover:bg-rose-color"
+                                    className="flex justify-between p-4 bg-box-color rounded-md hover:bg-rose-color hover:text-white"
                                 >
-                                    <div className="truncate sm:w-3/12">
+                                    <div className="truncate sm:w-4/12">
                                         <div className="flex text-lg">
-                                            <p className="truncate font-medium text-white">{item.name}</p>
+                                            <p className="truncate font-bold text-2xl text-violet-color">{item.name}</p>
                                         </div>
                                     </div>
                                     <p className="flex overflow-hidden text-sm text-yellow-color transition-all duration-500 ">
                                         {item?.status}
                                     </p>
 
-                                    <p className="flex text-white">
+                                    <p className="flex text-orange-color">
                                         Members: {item?.members?.length}
                                     </p>
 

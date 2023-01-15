@@ -80,12 +80,13 @@ const PageHomeProjects = () => {
 
   return (
     <div className="flex flex-col w-8/12 items-center gap-8">
+      <h3 className="text-2xl font-light">Share ownership of projects with other creators.</h3>
       <ComponentButton
         buttonStyle="w-max"
         buttonText="Start a project"
         buttonEvent={() => router.push("/createproject")}
       />
-      <h3 className="text-2xl font-bold">A protocol to share ownership of a project. Try demo on Solana Devnet.</h3>
+ 
       <HeadBar
         event={(value) => {
           setShowProject(value)
@@ -104,7 +105,7 @@ const PageHomeProjects = () => {
 
       <Projects showModel={true} projects={projects} />
 
-
+      <p className="text-xs w-8/12 text-center p-4">Mate is based on a Project Ownership Share Protocol (POSP) that utilizes smart contracts on the Solana Devnet blockchain to manage the distribution of ownership shares and revenue.</p>
     </div>
   );
 };

@@ -65,9 +65,8 @@ const CallProject = ({ keyProject }) => {
 
   return (
     <div className="flex flex-col gap-4 mt-12 w-8/12">
-      <div className="flex text-xl w-full justify-between font-semibold">
-        <h4 >Project Name</h4>
-        <h4>{project?.account.name}</h4>
+      <div className="flex w-full justify-between font-semibold">
+        <h4 className="text-3xl text-violet-color">Project Name: {project?.account.name}</h4>
       </div>
       <hr className="h-[3px] bg-slate-300 border-[1px] w-full" />
 
@@ -135,7 +134,7 @@ const CallProject = ({ keyProject }) => {
                       // }}
                       className="flex text-base gap-2 w-4/12 overflow-ellipsis truncate"
                     >
-                      <p className="text-[#FA9972]">Wallet: </p>
+                      <p className="text-box-color">Wallet: </p>
                       <p>{memb.pubkey}</p>
                     </div>
                   </div>
@@ -147,17 +146,25 @@ const CallProject = ({ keyProject }) => {
           }
         </div>
       </div>
-      <Link href={`https://explorer.solana.com/tx/${txProject?.signature}?cluster=devnet`}>
-        <a target="blank" className="w-full break-all">https://explorer.solana.com/tx/{txProject?.signature}?cluster=devnet</a>
+      <p className="text-white text-2xl">Send this link to your partners to sign the agreement.</p>
+      <Link href={`https://${host}${router.asPath}`}>
+        <a target="blank" className="w-full break-all text-xl text-orange-color">https://${host}${router.asPath}</a>
       </Link>
-      <div className="flex w-full  justify-around">
-        <Link target="_blank" href={`https://twitter.com/messages/compose?text=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
-          <a target="blank" className="btn flex items-center justify-center">Twitter</a>
-        </Link>
+      <div className="flex w-full justify-around">
+    
         <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
-          <a target="blank" className="btn flex items-center justify-center">EmailTo</a>
+          <a target="blank" className="btn flex items-center justify-center">copy link</a>
         </Link>
       </div>
+      <div className="flex w-full justify-around">
+        <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
+          <a target="blank" className="btn flex items-center justify-center">email to</a>
+        </Link>
+      </div>
+      <p className="text-white text-xs">Solana Explorer TX: </p>
+      <Link href={`https://explorer.solana.com/tx/${txProject?.signature}?cluster=devnet`}>
+        <a target="blank" className="w-full break-all text-xs">https://explorer.solana.com/tx/{txProject?.signature}?cluster=devnet</a>
+      </Link>
     </div >
   );
 };

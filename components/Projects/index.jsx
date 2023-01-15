@@ -57,7 +57,7 @@ const Projects = ({ projects, fnProjects, queryId }) => {
             <CardList list={listProject} noResults="No projects yet" />
           </>
           :
-          <p>Connect your wallet to see your projects.</p>
+          <p className="text-orange-color">Connect your wallet to see your projects.</p>
 
       }
     </div>
