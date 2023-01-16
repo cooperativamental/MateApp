@@ -62,18 +62,10 @@ const CallProject = ({ keyProject }) => {
   }
 
 
-<<<<<<< HEAD
-
-  return (
-    <div className="flex flex-col gap-4 mt-12 w-8/12">
-      <div className="flex w-full justify-between font-semibold">
-        <h4 className="text-3xl text-violet-color">Project Name: {project?.account.name}</h4>
-=======
   if (!project) {
     return (
       <div className="flex col-start-1 col-end-2 row-start-2 row-end-3 w-9/12 justify-center h-40">
         <div className="animate-spin flex  border-4 border-slate-300 border-l-4 border-l-[#5A31E1] rounded-[50%] h-10 w-10 " />
->>>>>>> dc7b6174e2f6218db4fdaccf90fb2fb27a396582
       </div>
     )
   } else {
@@ -160,60 +152,6 @@ const CallProject = ({ keyProject }) => {
             }
           </div>
         </div>
-<<<<<<< HEAD
-      }
-      <div className="mb-10">
-        <h3>The Team:</h3>
-        <div className="flex flex-col gap-4">
-          {
-            project?.account?.members.map(memb => {
-              if (memb.pubkey !== wallet?.publicKey?.toBase58()) {
-                return (
-                  <div className={`flex items-center  justify-between w-full py-1 px-6 rounded-md ${memb.status === "INVITED" ? "bg-[#FCF776] text-black" : "bg-[#3BB89F] text-white"}`}>
-                    <p>Member</p>
-                    <div className="flex gap-2 items-center">
-                      {memb.status === "INVITED" ? "Pending" : "Signed"}
-                    </div>
-                    <div
-                      // onDoubleClick={(e) => {
-                      //   navigator.clipboard.writeText(e.target.value)
-                      // }}
-                      className="flex text-base gap-2 w-4/12 overflow-ellipsis truncate"
-                    >
-                      <p className="text-box-color">Wallet: </p>
-                      <p>{memb.pubkey}</p>
-                    </div>
-                  </div>
-                )
-              }
-
-            })
-
-          }
-        </div>
-      </div>
-      <p className="text-white text-2xl">Send this link to your partners to sign the agreement.</p>
-      <Link href={`https://${host}${router.asPath}`}>
-        <a target="blank" className="w-full break-all text-xl text-orange-color">https://${host}${router.asPath}</a>
-      </Link>
-      <div className="flex w-full justify-around">
-    
-        <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
-          <a target="blank" className="btn flex items-center justify-center">copy link</a>
-        </Link>
-      </div>
-      <div className="flex w-full justify-around">
-        <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
-          <a target="blank" className="btn flex items-center justify-center">email to</a>
-        </Link>
-      </div>
-      <p className="text-white text-xs">Solana Explorer TX: </p>
-      <Link href={`https://explorer.solana.com/tx/${txProject?.signature}?cluster=devnet`}>
-        <a target="blank" className="w-full break-all text-xs">https://explorer.solana.com/tx/{txProject?.signature}?cluster=devnet</a>
-      </Link>
-    </div >
-  );
-=======
         {
           project?.account?.status !== "PAID" ?
             <div className="flex w-full justify-center">
@@ -250,7 +188,6 @@ const CallProject = ({ keyProject }) => {
       </div >
     );
   }
->>>>>>> dc7b6174e2f6218db4fdaccf90fb2fb27a396582
 };
 
 export default CallProject;
