@@ -61,7 +61,6 @@ const CallProject = ({ keyProject }) => {
     router.reload()
   }
 
-  console.log(router.asPath)
 
   if (!project) {
     return (
@@ -153,25 +152,39 @@ const CallProject = ({ keyProject }) => {
             }
           </div>
         </div>
-        <p className="text-white text-2xl">Send this link to your partners to sign the agreement.</p>
-        <Link href={`https://${host}${router.asPath}`}>
-          <a target="blank" className="w-full break-all text-xl text-orange-color">https://{host}{router.asPath}</a>
-        </Link>
-        <div className="flex flex-col w-full items-center gap-4">
-          <ComponentButton
-            buttonEvent={() => {
-              navigator?.clipboard?.writeText(`https://${host}${router.asPath}`)
-            }}
-            buttonText="copy link"
-          />
-          <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
-            <a target="blank" className="btn flex items-center justify-center">email to</a>
-          </Link>
-        </div>
-        <p className="text-white text-xs">Solana Explorer TX: </p>
-        <Link href={`https://explorer.solana.com/tx/${txProject?.signature}?cluster=devnet`}>
-          <a target="blank" className="w-full break-all text-xs">https://explorer.solana.com/tx/{txProject?.signature}?cluster=devnet</a>
-        </Link>
+        {
+          project?.account?.status !== "PAID" ?
+            <div className="flex w-full justify-center">
+              <ComponentButton
+                buttonText="Copy Invoice Link"
+                buttonEvent={(e) => {
+                  navigator?.clipboard?.writeText(`${host}/pay/${project?.account.name}`)
+                }}
+              />
+            </div>
+            :
+            <div>
+              <p className="text-white text-2xl">Send this link to your partners to sign the agreement.</p>
+              <Link href={`https://${host}${router.asPath}`}>
+                <a target="blank" className="w-full break-all text-xl text-orange-color">https://{host}{router.asPath}</a>
+              </Link>
+              <div className="flex flex-col w-full items-center gap-4">
+                <ComponentButton
+                  buttonEvent={() => {
+                    navigator?.clipboard?.writeText(`https://${host}${router.asPath}`)
+                  }}
+                  buttonText="copy link"
+                />
+                <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
+                  <a target="blank" className="btn flex items-center justify-center">email to</a>
+                </Link>
+              </div>
+              <p className="text-white text-xs">Solana Explorer TX: </p>
+              <Link href={`https://explorer.solana.com/tx/${txProject?.signature}?cluster=devnet`}>
+                <a target="blank" className="w-full break-all text-xs">https://explorer.solana.com/tx/{txProject?.signature}?cluster=devnet</a>
+              </Link>
+            </div>
+        }
       </div >
     );
   }
