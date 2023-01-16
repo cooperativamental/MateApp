@@ -29,7 +29,7 @@ const CallProject = ({ keyProject }) => {
     if (program && keyProject && !project) {
       const interval = setInterval(async () => {
         const res = await fetch(`/api/solana/getProject?nameproject=${keyProject}`)
-        const json = await res.json() 
+        const json = await res.json()
         setProject(json.projects[0])
       }, 1000);
 
@@ -60,6 +60,8 @@ const CallProject = ({ keyProject }) => {
     console.log(`https://explorer.solana.com/tx/${tx}?cluster=devnet`);
     router.reload()
   }
+
+  console.log(router.asPath)
 
   if (!project) {
     return (
@@ -153,15 +155,15 @@ const CallProject = ({ keyProject }) => {
         </div>
         <p className="text-white text-2xl">Send this link to your partners to sign the agreement.</p>
         <Link href={`https://${host}${router.asPath}`}>
-          <a target="blank" className="w-full break-all text-xl text-orange-color">https://${host}${router.asPath}</a>
+          <a target="blank" className="w-full break-all text-xl text-orange-color">https://{host}{router.asPath}</a>
         </Link>
-        <div className="flex w-full justify-around">
-
-          <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
-            <a target="blank" className="btn flex items-center justify-center">copy link</a>
-          </Link>
-        </div>
-        <div className="flex w-full justify-around">
+        <div className="flex flex-col w-full items-center gap-4">
+          <ComponentButton
+            buttonEvent={() => {
+              navigator?.clipboard?.writeText(`https://${host}${router.asPath}`)
+            }}
+            buttonText="copy link"
+          />
           <Link target="_blank" href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}>
             <a target="blank" className="btn flex items-center justify-center">email to</a>
           </Link>
