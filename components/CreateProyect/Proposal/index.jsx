@@ -13,7 +13,6 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
     const [errors, setErrors] = useState({})
     const wallet = useAnchorWallet();
     useEffect(() => {
-        console.log(project.members, project.totalNeto)
         setErrors({
             available: available !== 0,
             members: project.members.find(memb => memb.amount === 0 || !memb.address)
