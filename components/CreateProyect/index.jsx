@@ -77,10 +77,9 @@ const CreateProject = () => {
       ref={refContainer}
     >
 
-      <div className="flex w-6/12 justify-between font-bold text-base">
+      <div className="flex w-6/12 justify-between font-light text-sm">
         <p>Project Starter Wallet: {wallet?.publicKey?.toBase58()}</p>
       </div>
-      <hr className=" h-[3px] flex bg-slate-300 border-[1px] w-8/12 " />
       {/* {
 
         confirmation.INFO_PROJECT && confirmation.BUDGET && confirmation.AGREEMENT &&
