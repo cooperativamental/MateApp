@@ -72,7 +72,7 @@ const CallProject = ({ keyProject }) => {
     return (
       <div className="flex flex-col gap-4 mt-12 w-8/12">
         <div className="flex w-full justify-between font-semibold">
-          <h4 className="text-3xl text-violet-color">Project Name: {project?.account?.name}</h4>
+          <h4 className="text-3xl text-violet-color">Project: {project?.account?.name}</h4>
         </div>
         <hr className="h-[3px] bg-slate-300 border-[1px] w-full" />
 
@@ -96,9 +96,6 @@ const CallProject = ({ keyProject }) => {
                             {memb?.amount}
                           </p>
                           <div className="text-[.5rem]">
-                            <p>
-                              USDC
-                            </p>
                             <p>SOL</p>
                           </div>
                         </div>
@@ -154,7 +151,11 @@ const CallProject = ({ keyProject }) => {
         </div>
         {
           project?.account?.status !== "PAID" ?
-            <div className="flex w-full justify-center">
+            <div className="flex w-full justify-center flex-col gap-4 items-center">
+               <p className="text-white text-xl">Send this link to your client to pay for the project.</p>
+               <Link href={`https://${host}/pay/${project?.account.name}`}>
+                <a target="blank" className="w-full break-all text-xl text-yellow-color text-center">https://${host}/pay/${project?.account.name}</a>
+              </Link>
               <ComponentButton
                 buttonText="Copy Invoice Link"
                 buttonEvent={(e) => {
@@ -164,7 +165,7 @@ const CallProject = ({ keyProject }) => {
             </div>
             :
             <div>
-              <p className="text-white text-2xl">Send this link to your partners to sign the agreement.</p>
+              <p className="text-white text-2xl">Share this link with your partners to sign the agreement.</p>
               <Link href={`https://${host}${router.asPath}`}>
                 <a target="blank" className="w-full break-all text-xl text-orange-color">https://{host}{router.asPath}</a>
               </Link>
