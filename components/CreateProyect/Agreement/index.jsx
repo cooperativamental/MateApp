@@ -61,7 +61,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                     <InputSelect
                         disabled
                         value={available}
-                        inputStyle="text-center"
+                        inputStyle="text-center text-4xl ring-0"
                     />
                     <div>
                         <p className="text-2xl">◎ SOL</p>
@@ -93,9 +93,9 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
             </div> */}
             <div className="flex w-full items-center">
                 <div className="w-4/12 p-1">
-                    <p className="text-lg text-gray-100 whitespace-nowrap">Members (n)</p>
+                    <p className="text-xl text-gray-100 whitespace-nowrap">Members (n):</p>
                     <p className="text-xs text-[#3BB89F]">
-                        How many partners are involved in the project.
+                        How many partners are involved in the project?
                     </p>
                 </div>
                 <div className="w-[22.5rem] overflow-hidden rounded-md">
@@ -175,7 +175,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
             </div>
 
             <div className="flex flex-col w-full gap-4">
-                <p className="text-md text-gray-100 whitespace-nowrap">Members agreement for this project</p>
+                <p className="text-xl text-gray-100 whitespace-nowrap">Agreement for this project</p>
                 <p className="text-xs text-[#3BB89F]">
                     Always remember that performance is a team job.
                 </p>

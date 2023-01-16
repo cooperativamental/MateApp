@@ -208,16 +208,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                     </div>
                 </div>
             </div>
-            <div className="flex w-full justify-between items-center text-lg">
-                <p>Strategy</p>
-                <p>{project.typeAgreement}</p>
-            </div>
+
             <div className="flex w-full items-center">
                 <div className="w-4/12 p-1">
                     <p className="text-lg text-gray-100 whitespace-nowrap">Members (n)</p>
-                    <p className="text-xs text-[#3BB89F]">
-                        How many partners are involved in the project.
-                    </p>
                 </div>
                 <div className="w-[22.5rem] overflow-hidden rounded-md">
                     <button
@@ -294,6 +288,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                     </button>
                 </div>
             </div>
+            <div className="flex w-full justify-between items-center text-lg">
+                <p className="text-green-color">Strategy: {project.typeAgreement}</p>
+                <p>Toggle the member for the {project.typeAgreement}</p>
+            </div>
             <div className="flex flex-col w-full gap-4">
                 {
                     project?.members?.map((e, index) => {
@@ -355,7 +353,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                     })
                 }
             </div>
-            <p>Confirm Partners Agreement</p>
+            <p>Add members wallets addresses. Available Budget (1) should be 0 to preview the agreement.</p>
             <ComponentButton
                 buttonEvent={handleConfirm}
                 buttonText="View Proposal"

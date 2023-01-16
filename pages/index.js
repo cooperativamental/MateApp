@@ -106,6 +106,9 @@ const PageHomeProjects = () => {
       <Projects showModel={true} projects={projects} />
 
       <p className="text-xs w-8/12 text-center p-4">Mate is based on a Project Ownership Share Protocol (POSP) that utilizes smart contracts on the Solana Devnet blockchain to manage the distribution of ownership shares and revenue.</p>
+      <p className="mt-10 text-center text-xs leading-5 text-gray-500">
+          &copy; 2023 MateLabs.
+        </p>
     </div>
   );
 };
