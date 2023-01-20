@@ -66,11 +66,26 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                 })
             }
         }
+        if (e.target.id === "currency") {
+            const options = e.target.options;
+
+            for (let i = 0; options.length > i; i++) {
+                if (options[i].selected) {
+                    setProject({
+                        ...project,
+                        [e.target.id]: options[i].value,
+                    })
+                }
+            }
+
+        }
     }
 
     const handleConfirm = () => {
         confirmInfoProject("BUDGET", true)
     }
+
+    console.log(project)
 
 
     return (
@@ -95,7 +110,26 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                     </p>
                 </div>
             </div>
-
+            <div className="flex w-full items-center justify-between">
+                <div className="w-5/12 p-4">
+                    <p className="text-lg text-gray-100 whitespace-nowrap ">Currency</p>
+                </div>
+                <div className="flex items-center w-6/12">
+                    <InputSelect
+                        select
+                        inputStyle={`flex  appearance-none border text-center rounded-xl h-16 text-xl pl-4 placeholder-slate-100`}
+                        id="currency"
+                        onChange={handleBudgetProject}
+                    >
+                        <option selected={project?.currency === "SOL"}>SOL</option>
+                        <option selected={project?.currency === "BONK"}>BONK</option>
+                        <option selected={project?.currency === "USDC"}>USDC</option>
+                    </InputSelect>
+                    <p>
+                        ◎ SOL
+                    </p>
+                </div>
+            </div>
             {/* <div className="flex w-full items-center">
                 <div className="w-4/12 p-4">
                     <p className="text-lg text-gray-100 whitespace-nowrap">Treasury rate</p>
