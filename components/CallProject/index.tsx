@@ -13,11 +13,9 @@ import { HostHook } from "../../hooks/useHost";
 const CallProject = ({ keyProject }) => {
   const router = useRouter();
   const host = HostHook();
-  const [project, setProject] = useState<{
-    account: Mate["accounts"][1];
-  } | null>();
-  const [txProject, setTxProject] = useState();
-  const [projectPublicKey, setProjectPublicKey] = useState<PublicKey>();
+  const [project, setProject] = useState<any>();
+  const [txProject, setTxProject] = useState<any>();
+  const [projectPublicKey, setProjectPublicKey] = useState<PublicKey | null>();
 
   const { connection } = useConnection();
   const wallet = useAnchorWallet();
