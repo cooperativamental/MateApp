@@ -112,8 +112,7 @@ const CallProject = ({ keyProject }) => {
                       <ComponentButton
                         buttonText="Sign Contract"
                         buttonEvent={() => signContract(memb?.pubkey)}
-                        buttonStyle="h-6 text-base"
-                      />
+                        buttonStyle="h-6 text-base" btn2={undefined} btn3={undefined} conditionDisabled={undefined} isBack={undefined} routeBack={undefined}                      />
                     ) : (
                       <p>CONFIRMED</p>
                     )}
@@ -174,8 +173,7 @@ const CallProject = ({ keyProject }) => {
                 navigator?.clipboard?.writeText(
                   `${host}/pay/${project?.account.name}`
                 );
-              }}
-            />
+              } } btn2={undefined} btn3={undefined} buttonStyle={undefined} conditionDisabled={undefined} isBack={undefined} routeBack={undefined}            />
           </div>
         ) : (
           <div>
@@ -193,15 +191,13 @@ const CallProject = ({ keyProject }) => {
             </Link>
             <div className="flex flex-col w-full items-center gap-4">
               <ComponentButton
-                buttonEvent={() => {
-                  navigator?.clipboard?.writeText(
-                    `https://${host}${router.asPath}`
-                  );
-                }}
-                buttonText="copy link"
-              />
+                  buttonEvent={() => {
+                    navigator?.clipboard?.writeText(
+                      `https://${host}${router.asPath}`
+                    );
+                  } }
+                  buttonText="copy link" btn2={undefined} btn3={undefined} buttonStyle={undefined} conditionDisabled={undefined} isBack={undefined} routeBack={undefined}              />
               <Link
-                target="_blank"
                 href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}
               >
                 <a
