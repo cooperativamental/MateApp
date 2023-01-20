@@ -4,7 +4,7 @@ import ComponentButton from "../Elements/ComponentButton";
 import InputSelect from "../Elements/InputSelect";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useConnection } from "@solana/wallet-adapter-react";
-import { useProgram } from "../../hooks/useProgram/index.ts";
+import { useProgram } from "../../hooks/useProgram";
 import * as anchor from "@project-serum/anchor";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { Mate } from "../../types/mate";
