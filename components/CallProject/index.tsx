@@ -1,19 +1,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import ComponentButton from "../Elements/ComponentButton";
-import InputSelect from "../Elements/InputSelect";
 import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { useProgram } from "../../hooks/useProgram";
-import * as anchor from "@project-serum/anchor";
-import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { Mate } from "../../types/mate";
 import { SystemProgram, PublicKey } from "@solana/web3.js";
 import { useRouter } from "next/router";
-import { AnchorError, web3 } from "@project-serum/anchor";
-
+import { web3 } from "@project-serum/anchor";
 import { HostHook } from "../../hooks/useHost";
-import { useDeferredValue } from "react";
 
 const CallProject = ({ keyProject }) => {
   const router = useRouter();
