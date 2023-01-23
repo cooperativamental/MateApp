@@ -106,7 +106,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
 
                     />
                     <p>
-                        ◎ SOL
+                        {project.currency}
                     </p>
                 </div>
             </div>
@@ -126,7 +126,7 @@ const Budget = ({ setProject, project, confirmInfoProject }) => {
                         <option selected={project?.currency === "USDC"}>USDC</option>
                     </InputSelect>
                     <p>
-                        ◎ SOL
+                        {project.currency}
                     </p>
                 </div>
             </div>

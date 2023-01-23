@@ -203,7 +203,7 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
                         inputStyle="text-center"
                     />
                     <div>
-                        <p className="text-2xl">◎ SOL</p>
+                        <p className="text-2xl">{project.currency}</p>
                     </div>
                 </div>
             </div>
@@ -289,7 +289,10 @@ const AssembleTeam = ({ project, setProject, confirmInfoProject, available, conf
             </div>
             <div className="flex w-full justify-between items-center text-lg">
                 <p className="text-green-color">Strategy: {project.typeAgreement}</p>
-                <p>Toggle the member for the {project.typeAgreement}</p>
+                {
+                    (project.typeAgreement === "FIRST_MINORITY" || project.typeAgreement === "COACH_MODE") &&
+                    <p>Toggle the member for the {project.typeAgreement}</p>
+                }
             </div>
             <div className="flex flex-col w-full gap-4">
                 {

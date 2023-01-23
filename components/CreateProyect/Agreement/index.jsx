@@ -64,7 +64,7 @@ const Agreement = ({ setProject, project, confirmInfoProject }) => {
                         inputStyle="text-center text-4xl ring-0"
                     />
                     <div>
-                        <p className="text-2xl">◎ SOL</p>
+                        <p className="text-2xl">{project.currency}</p>
                     </div>
                 </div>
             </div>
