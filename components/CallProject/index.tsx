@@ -51,7 +51,7 @@ const CallProject = ({ keyProject }) => {
     const [pdaPublicKey] = web3.PublicKey.findProgramAddressSync(
       [
         Buffer.from("project"),
-        Buffer.from(project?.account.name),
+        Buffer.from(project?.name),
         Buffer.from(""),
       ],
       program.programId
@@ -79,7 +79,7 @@ const CallProject = ({ keyProject }) => {
       <div className="flex flex-col gap-4 mt-12 w-8/12">
         <div className="flex w-full justify-between font-semibold">
           <h4 className="text-3xl text-violet-color">
-            Project: {project?.account?.name}
+            Project: {project?.acco}
           </h4>
         </div>
         <hr className="h-[3px] bg-slate-300 border-[1px] w-full" />
@@ -88,7 +88,6 @@ const CallProject = ({ keyProject }) => {
           <div>
             <h3>The proposal:</h3>
             {project?.members?.map((memb) => {
-              console.log(memb);
               if (memb?.pubkey?.toBase58() === wallet?.publicKey?.toBase58()) {
                 return (
                   <div
@@ -159,19 +158,19 @@ const CallProject = ({ keyProject }) => {
             <p className="text-white text-xl">
               Send this link to your client to pay for the project.
             </p>
-            <Link href={`https://${host}/pay/${project?.account?.name}`}>
+            <Link href={`https://${host}/pay/${project?.acco}`}>
               <a
                 target="blank"
                 className="w-full break-all text-xl text-yellow-color text-center"
               >
-                https://${host}/pay/${project?.account?.name}
+                https://${host}/pay/${project?.acco}
               </a>
             </Link>
             <ComponentButton
               buttonText="Copy Invoice Link"
               buttonEvent={(e) => {
                 navigator?.clipboard?.writeText(
-                  `${host}/pay/${project?.account.name}`
+                  `${host}/pay/${project?.acco}`
                 );
               } } btn2={undefined} btn3={undefined} buttonStyle={undefined} conditionDisabled={undefined} isBack={undefined} routeBack={undefined}            />
           </div>
@@ -198,7 +197,7 @@ const CallProject = ({ keyProject }) => {
                   } }
                   buttonText="copy link" btn2={undefined} btn3={undefined} buttonStyle={undefined} conditionDisabled={undefined} isBack={undefined} routeBack={undefined}              />
               <Link
-                href={`mailto:?subject=Sign%20${project?.account?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}
+                href={`mailto:?subject=Sign%20${project?.acco}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}
               >
                 <a
                   target="blank"
