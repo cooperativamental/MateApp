@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link"
-
+import { useProgram } from "../../../hooks/useProgram";
 import ComponentButton from "../../Elements/ComponentButton";
-
+import { useAnchorWallet } from "@solana/wallet-adapter-react";
+import { useConnection } from "@solana/wallet-adapter-react";
 import { usePopUp } from "../../../context/PopUp";
 import { useCreateWeb3 } from "../../../functions/createWeb3.ts"
 import { PublicKey } from "@solana/web3.js";
@@ -12,7 +13,9 @@ import InputSelect from "../../Elements/InputSelect";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 
 const PreviewProject = ({ project, setProject, setConfirmation }) => {
-
+    const { connection } = useConnection();
+    const wallet = useAnchorWallet();
+    const { program } = useProgram({ connection, wallet });
     const router = useRouter()
     const { handlePopUp } = usePopUp()
     const { createProject } = useCreateWeb3()
@@ -46,8 +49,22 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
 
             ,
         })
-        router.push(`/projects/${project.nameProject}`)
     }
+
+    useEffect(() => {
+        if (!program) return;
+        const listener = program.addEventListener(
+          "ProjectCreated",
+          async (event, _slot, _sig) => {
+            if (event.name==project.nameProject)   {   router.push(`/projects/${project.nameProject}`)}
+          }
+        );
+    
+        return () => {
+          program.removeEventListener(listener);
+        };
+      }, [program]);
+
     const renderInfo = info => {
         return (
             <div className="flex flex-col gap-4">
