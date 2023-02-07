@@ -28,8 +28,9 @@ const CallProject = ({ keyProject }) => {
         program.programId
       );
       setProjectPublicKey(pdaPublicKey);
+      console.log(projectPublicKey)
     }
-  }, [wallet]);
+  }, [wallet, program, keyProject]);
 
   useEffect(() => {
     if (projectPublicKey) {
@@ -43,6 +44,7 @@ const CallProject = ({ keyProject }) => {
           projectPublicKey
         );
         setTxProject(signature[0]);
+        console.log(pdaProject)
       })();
     }
   }, [projectPublicKey]);
