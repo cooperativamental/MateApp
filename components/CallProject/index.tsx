@@ -5,7 +5,7 @@ import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { useProgram } from "../../hooks/useProgram";
 import { Mate } from "../../types/mate";
-import { SystemProgram, PublicKey } from "@solana/web3.js";
+import { SystemProgram, PublicKey, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useRouter } from "next/router";
 import { web3 } from "@project-serum/anchor";
 import { HostHook } from "../../hooks/useHost";
@@ -22,7 +22,7 @@ const CallProject = ({ keyProject }) => {
   const { program } = useProgram({ connection, wallet });
 
   useEffect(() => {
-    if (program) {
+    if (program && keyProject) {
       const [pdaPublicKey] = web3.PublicKey.findProgramAddressSync(
         [Buffer.from("project"), Buffer.from(keyProject), Buffer.from("")],
         program.programId
@@ -103,7 +103,7 @@ const CallProject = ({ keyProject }) => {
                     <div className="flex gap-4 items-center">
                       <p>{(memb.amount / Number(project.amount)) * 100}</p>
                       <div className="flex gap-2 items-center">
-                        <p>{memb.amount.toString()}</p>
+                        <p>{(memb.amount / LAMPORTS_PER_SOL).toString()}</p>
                         <div className="text-[.5rem]">
                           <p>SOL</p>
                         </div>
@@ -160,19 +160,19 @@ const CallProject = ({ keyProject }) => {
             <p className="text-white text-xl">
               Send this link to your client to pay for the project.
             </p>
-            <Link href={`https://${host}/pay/${project?.acco}`}>
+            <Link href={`https://${host}/pay/${project?.name}`}>
               <a
                 target="blank"
                 className="w-full break-all text-xl text-yellow-color text-center"
               >
-                https://${host}/pay/${project?.acco}
+                https://{host}/pay/{project?.name}
               </a>
             </Link>
             <ComponentButton
               buttonText="Copy Invoice Link"
               buttonEvent={(e) => {
                 navigator?.clipboard?.writeText(
-                  `${host}/pay/${project?.acco}`
+                  `${host}/pay/${project?.name}`
                 );
               } } btn2={undefined} btn3={undefined} buttonStyle={undefined} conditionDisabled={undefined} isBack={undefined} routeBack={undefined}            />
           </div>
@@ -199,7 +199,7 @@ const CallProject = ({ keyProject }) => {
                   } }
                   buttonText="copy link" btn2={undefined} btn3={undefined} buttonStyle={undefined} conditionDisabled={undefined} isBack={undefined} routeBack={undefined}              />
               <Link
-                href={`mailto:?subject=Sign%20${project?.acco}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}
+                href={`mailto:?subject=Sign%20${project?.name}&body=Hello%20Partner%20Sign%20"https://${host}${router.asPath}"`}
               >
                 <a
                   target="blank"

@@ -21,9 +21,9 @@ const PageHomeProjects = () => {
   const { program } = useProgram({ connection, wallet });
 
   useEffect(() => {
-    if (program) {
+    if (program && id) {
       const [pdaPublicKey] = web3.PublicKey.findProgramAddressSync(
-        [Buffer.from("project"), Buffer.from(id ?? ""), Buffer.from("")],
+        [Buffer.from("project"), Buffer.from(id), Buffer.from("")],
         program.programId
       );
       setProjectPublicKey(pdaPublicKey);
