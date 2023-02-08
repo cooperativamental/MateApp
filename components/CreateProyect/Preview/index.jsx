@@ -7,7 +7,7 @@ import { useAnchorWallet } from "@solana/wallet-adapter-react";
 import { useConnection } from "@solana/wallet-adapter-react";
 import { usePopUp } from "../../../context/PopUp";
 import { useCreateWeb3 } from "../../../functions/createWeb3.ts"
-import { PublicKey } from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { BN } from "@project-serum/anchor";
 import InputSelect from "../../Elements/InputSelect";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
@@ -24,16 +24,18 @@ const PreviewProject = ({ project, setProject, setConfirmation }) => {
     })
 
     const create = async () => {
+        
         const members = project.members.map(memb => {
             return {
                 member: new PublicKey(memb.address),
-                amount: new BN(memb.amount)
+                amount: new BN(memb.amount * LAMPORTS_PER_SOL)
             }
         })
+        console.log(project.totalBruto)
         const { tx } = await createProject({
             name: project.nameProject,
             payments: members,
-            amount: new BN(project.totalBruto)
+            amount: new BN(project.totalBruto * LAMPORTS_PER_SOL)
         })
         handlePopUp({
             text:
