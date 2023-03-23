@@ -1,6 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Mate Protocol
+
+Mate is based on a Project Ownership Share Protocol (POSP) that utilizes smart contracts on the Solana blockchain to manage the distribution of ownership shares and revenue.
+
+The goal is to decentralize project ownership to enhance work independence.
+
+Performance is a team job. Try the demo and share your thoughts.
+
+Try demo on [Solana Devnet](https://mate-three.vercel.app/)
+
+## Project Ownership Share Protocol
+
+Decentralizing project ownership refers to distributing decision-making authority and responsibility among team members, rather than having a single person or group in control. This approach aims to give team members more autonomy and ownership over their work, which in turn enhances their sense of independence and motivation.
+
+By decentralizing project ownership, team members can take ownership of specific tasks and manage them independently, rather than relying on a single leader or manager to make decisions. This allows team members to take initiative, make decisions and take responsibility for their own work. Additionally, it can improve communication and collaboration among team members and increase overall productivity and job satisfaction.
+
+In summary, the goal of decentralizing project ownership is to empower team members to take control of their own work, and to increase their independence, motivation and productivity.
+
+Follow us on [Twitter](https://twitter.com/mateprotocol)
+
 
 ## Getting Started
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 
